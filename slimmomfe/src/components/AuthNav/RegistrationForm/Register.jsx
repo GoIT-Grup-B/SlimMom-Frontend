@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Styles from './Register.module.css'
+import {Formik, Form, Field} from 'formik';
 
 const Register = () => {
 
@@ -16,8 +17,9 @@ const Register = () => {
     })
   };
 
-  const handleSubmit=(event)=>{
-    event.preventDefault();
+  const handleSubmit=(values,actions)=>{
+    console.log(values);
+    actions.resetForm();
 
     setValues({
       name:"",
@@ -27,19 +29,19 @@ const Register = () => {
   };
 
   return (
-    <div className={Styles.registerPage}>
+    <Formik className={Styles.registerPage} initialValues={{ name:"",email:"",password:""}} onSubmit={handleSubmit}>
         <h1 id="registerHeader" className={Styles.headerAuth}>REGISTER</h1>
-        <form className={Styles.formRegister} onChange={handleSubmit}>
-          <input name="name" type="text" value={values.name} placeholder='Name *' onChange={handleChangeInput} className={Styles.formInputElement}></input>
-          <input email="email" type="text" value={values.email} placeholder='Email *' onChange={handleChangeInput} className={Styles.formInputElement}></input>
-          <input password="password" type="password" value={values.password} placeholder='Password *' onChange={handleChangeInput} className={Styles.formInputElement}></input>
+        <Form className={Styles.formRegister} onChange={handleSubmit}>
+          <Field name="name" type="text" value={values.name} placeholder='Name *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
+          <Field name="email" type="text" value={values.email} placeholder='Email *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
+          <Field password="password" type="password" value={values.password} placeholder='Password *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
           <div className={Styles.buttonAuth}>
           <button type="submit" className={Styles.buttonOne}>Register</button>
           <button type="submit" className={Styles.buttonOne}>Login</button>
           </div>
 
-        </form>
-    </div>
+        </Form>
+    </Formik>
   )
 }
 
