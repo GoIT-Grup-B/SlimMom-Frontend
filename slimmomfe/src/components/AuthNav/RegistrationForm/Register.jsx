@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import Styles from './Register.module.css'
 import {Formik, Form, Field} from 'formik';
+import {useId} from 'react';
 
 const Register = () => {
+  const nameFieldId = useId();
+  const emailFieldId = useId();
+  const passwordFieldId = useId();
 
   const [values,setValues] = useState({
     name:"",
@@ -32,9 +36,9 @@ const Register = () => {
     <Formik className={Styles.registerPage} initialValues={{ name:"",email:"",password:""}} onSubmit={handleSubmit}>
         <h1 id="registerHeader" className={Styles.headerAuth}>REGISTER</h1>
         <Form className={Styles.formRegister} onChange={handleSubmit}>
-          <Field name="name" type="text" value={values.name} placeholder='Name *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
-          <Field name="email" type="text" value={values.email} placeholder='Email *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
-          <Field password="password" type="password" value={values.password} placeholder='Password *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
+          <Field name="name" id={nameFieldId} type="text" value={values.name} placeholder='Name *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
+          <Field name="email" id={emailFieldId} type="text" value={values.email} placeholder='Email *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
+          <Field password="password" id={passwordFieldId} type="password" value={values.password} placeholder='Password *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
           <div className={Styles.buttonAuth}>
           <button type="submit" className={Styles.buttonOne}>Register</button>
           <button type="submit" className={Styles.buttonOne}>Login</button>
