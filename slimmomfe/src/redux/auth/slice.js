@@ -13,14 +13,14 @@ export const initialState ={
   error:null
 }
 
-const API_URL="https://connections-api.goit.global";
+const API_URL="";
 
 export const loginUser = createAsyncThunk(
   "auth/login",
   async({email,password},{dispatch, rejectWithValue })=>{
   try{
  
-    const response = await axios.post(`${API_URL}/users/login`,{email,password});
+    const response = await axios.post(`${API_URL}/auth/login`,{email,password});
     const token = response.data.token;
     dispatch(setToken(token))
     console.log(token)
@@ -35,7 +35,7 @@ export const registerUser = createAsyncThunk(
   "auth/register",
   async ({ name, email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/users/signup`, {
+      const response = await axios.post(`${API_URL}/auth/register`, {
         name, email, password
       });
       return response.data;
@@ -49,7 +49,7 @@ export const registerUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk("auth/logout",async(_,{getState,rejectWithValue})=>{
   try{
     const { token } = getState().auth;
-    const response = await axios.post(`${API_URL}/users/logout`, null, {
+    const response = await axios.post(`${API_URL}/auth/logout`, null, {
       headers: {
         Accept: "*/*",
         Authorization: `Bearer ${token}`
