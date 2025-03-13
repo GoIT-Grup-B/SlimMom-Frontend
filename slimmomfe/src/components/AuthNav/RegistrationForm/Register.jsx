@@ -77,7 +77,7 @@ const Register = () => {
           <ErrorMessage name="password" component="span" />
           <div className={Styles.buttonAuth}>
           <button type="submit" className={Styles.buttonOne}>Register</button>
-          <button type="submit" className={Styles.buttonOne}>Login</button>
+          <button type="submit" className={Styles.buttonTwo}>Login</button>
           </div>
 
         </Form>

@@ -13,12 +13,15 @@
     line-height: 100%;
     letter-spacing: 4%;
     text-transform: uppercase;
+    text-align: start;
+    width: 20rem;
 }
 
-.formRegister{
+.formLogin{
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 2rem;
+    width: 20rem;
 }
 
 .formInputElement{
@@ -36,10 +39,21 @@
 }
 
 .buttonOne{
-    width: 182;
-    height: 44;
+    width: 6rem;
+    height: 2rem;   
     background-color:#FC842D;
     color:white;
     left: 16px;
     border-radius: 30px;
+    border:none;
+}
+
+.buttonTwo{
+    width: 6rem;
+    height: 2rem;   
+    background-color: white;
+    color:#FC842D;
+    left: 16px;
+    border-radius: 30px;
+    border: 2px solid #FC842D;
 }
