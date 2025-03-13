@@ -8,7 +8,7 @@ const AppRouter = () => {
     <Suspense fallback={<div>Loading...</div>}>
         <Routes>
             <Route />
-            <Route path='/register' element={<RestrictadRoute> <RegisterPage/> </RestrictadRoute>} />
+            <Route path='/auth/register' element={<RestrictadRoute> <RegisterPage/> </RestrictadRoute>} />
             <Route />
             <Route />
             <Route />

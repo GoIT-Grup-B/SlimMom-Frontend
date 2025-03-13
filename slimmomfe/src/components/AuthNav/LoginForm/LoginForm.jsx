@@ -6,12 +6,14 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../redux/auth/slice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
 
   const emailFieldId= useId();
   const passwordFieldId = useId();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [values,setValues] = useState({
     email:"",
     password:"",
@@ -56,7 +58,7 @@ const LoginForm = () => {
           <Field name="password" id={passwordFieldId} type="password" value={values.password} placeholder='Password *' onChange={handleChangeInput} className={Styles.formInputElement}></Field>
           <div className={Styles.buttonAuth}>
           <button type="submit" className={Styles.buttonOne}>Login</button>
-          <button type="submit" className={Styles.buttonTwo}>Register</button>
+          <button type="submit" className={Styles.buttonTwo} onClick={()=>navigate('/auth/register')}>Register</button>
           </div>
         </Form>
         </>
