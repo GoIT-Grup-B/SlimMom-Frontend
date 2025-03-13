@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { registerUser } from '../../../redux/auth/slice';
 
-const Register = () => {
+const RegisterForm = () => {
   const nameFieldId = useId();
   const emailFieldId = useId();
   const passwordFieldId = useId();
@@ -86,4 +86,4 @@ const Register = () => {
   )
 }
 
-export default Register;
+export default RegisterForm;

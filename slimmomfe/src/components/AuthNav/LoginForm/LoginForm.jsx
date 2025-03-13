@@ -7,7 +7,7 @@ import { loginUser } from '../../../redux/auth/slice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Register = () => {
+const LoginForm = () => {
 
   const emailFieldId= useId();
   const passwordFieldId = useId();
@@ -64,4 +64,4 @@ const Register = () => {
   )
 }
 
-export default Register;
+export default LoginForm;
