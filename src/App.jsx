@@ -1,17 +1,26 @@
-import Register from "./components/RegistrationForm/RegisterForm.jsx";
-import Login from "./components/LoginForm/LoginForm.jsx";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { fetchCurrentUser } from "./redux/auth/authOps";
+import AppRoutes from "./routes/AppRoutes";
 
-import "./App.css";
+const App = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-function App() {
+  useEffect(() => {
+    // Eğer token yoksa, fetchCurrentUser çağrısını yapma
+    if (!localStorage.getItem("token")) {
+      return;
+    }
+    dispatch(fetchCurrentUser());
+  }, [dispatch, location]);
+
   return (
     <>
-      <div>
-        <Register />
-        <Login />
-      </div>
+      <AppRoutes />
     </>
   );
-}
+};
 
 export default App;

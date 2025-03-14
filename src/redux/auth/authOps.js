@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://connections-api.goit.global";
+const API_URL = "https://slimmom-backend-s8n8.onrender.com";
 
 export const registerUser = createAsyncThunk(
   "auth/register",
   async ({ name, email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/users/signup`, {
+      const response = await axios.post(`${API_URL}/auth/register`, {
         name,
         email,
         password,
@@ -23,13 +23,18 @@ export const loginUser = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/users/login`, {
+      console.log("Login isteği gönderiliyor:", { email, password });
+
+      const response = await axios.post(`${API_URL}/auth/login`, {
         email,
         password,
       });
+
+      console.log("Backend yanıtı:", response.data);
+
       const token = response.data.token;
       dispatch(setToken(token));
-      console.log(token);
+
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Login failed");
@@ -71,6 +76,22 @@ export const refreshUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Refresh failed");
+    }
+  }
+);
+
+export const fetchCurrentUser = createAsyncThunk(
+  "auth/fetchCurrentUser",
+  async (token, thunkAPI) => {
+    try {
+      const res = await axios.get(`${URL}/users/current`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
