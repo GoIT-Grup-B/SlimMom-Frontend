@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { registerUser } from "../../redux/auth/slice";
+import { registerUser } from "../../redux/auth/authOps";
 
 const Register = () => {
   const nameFieldId = useId();

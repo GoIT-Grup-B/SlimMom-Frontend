@@ -3,7 +3,7 @@ import Styles from "./LoginForm.module.css";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/auth/slice";
+import { loginUser } from "../../redux/auth/authOps";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
