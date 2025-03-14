@@ -1,19 +1,26 @@
-import Register from "./components/RegistrationForm/RegisterForm.jsx";
-import Login from "./components/LoginForm/LoginForm.jsx";
-import DiaryProductsList from "./components/DiaryProductsList/DiaryProductsList.jsx";
-import DiaryProductsListItem from "./components/DiaryProductsListItem/DiaryProductsListItem.jsx";
-import "./App.css";
-function App() {
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { fetchCurrentUser } from "./redux/auth/authOps";
+import AppRoutes from "./routes/AppRoutes";
+
+const App = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Eğer token yoksa, fetchCurrentUser çağrısını yapma
+    if (!localStorage.getItem("token")) {
+      return;
+    }
+    dispatch(fetchCurrentUser());
+  }, [dispatch, location]);
+
   return (
     <>
-      <div>
-        <Register />
-        <Login />
-        <DiaryProductsList />
-        <DiaryProductsListItem />
-      </div>
+      <AppRoutes />
     </>
   );
-}
+};
 
 export default App;
