@@ -1,18 +1,17 @@
-import Register from './components/AuthNav/RegistrationForm/Register.jsx';
-import Login from './components/AuthNav/LoginForm/Login.jsx'
+import Register from "./components/RegistrationForm/RegisterForm.jsx";
+import Login from "./components/LoginForm/LoginForm.jsx";
 
-import './App.css'
+import "./App.css";
 
 function App() {
-
   return (
     <>
       <div>
-        <Register/>
-        <Login/>
+        <Register />
+        <Login />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
