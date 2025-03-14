@@ -1,42 +1,46 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import axios from "axios"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export const initialState ={
+export const initialState = {
   user: {
     name: null,
     email: null,
-    password:""
+    password: "",
   },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
-  error:null
-}
+  error: null,
+};
 
-const API_URL="https://connections-api.goit.global";
+const API_URL = "https://connections-api.goit.global";
 
 export const loginUser = createAsyncThunk(
   "auth/login",
-  async({email,password},{dispatch, rejectWithValue })=>{
-  try{
- 
-    const response = await axios.post(`${API_URL}/users/login`,{email,password});
-    const token = response.data.token;
-    dispatch(setToken(token))
-    console.log(token)
-    return response.data;
+  async ({ email, password }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_URL}/users/login`, {
+        email,
+        password,
+      });
+      const token = response.data.token;
+      dispatch(setToken(token));
+      console.log(token);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Login failed");
+    }
   }
-  catch(error){
-    return rejectWithValue(error.response?.data || "Login failed");
-  }
-});
+);
 
 export const registerUser = createAsyncThunk(
   "auth/register",
   async ({ name, email, password }, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${API_URL}/users/signup`, {
-        name, email, password
+        name,
+        email,
+        password,
       });
       return response.data;
     } catch (error) {
@@ -45,23 +49,24 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  "auth/logout",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth;
+      const response = await axios.post(`${API_URL}/users/logout`, null, {
+        headers: {
+          Accept: "*/*",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-export const logoutUser = createAsyncThunk("auth/logout",async(_,{getState,rejectWithValue})=>{
-  try{
-    const { token } = getState().auth;
-    const response = await axios.post(`${API_URL}/users/logout`, null, {
-      headers: {
-        Accept: "*/*",
-        Authorization: `Bearer ${token}`
-  
-      },});
-    
-    return response.data;
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Logout failed");
+    }
   }
-  catch(error){
-    return rejectWithValue(error.response?.data || "Logout failed");
-  }
-})
+);
 
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
@@ -83,7 +88,7 @@ export const refreshUser = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-  name:"auth",
+  name: "auth",
   initialState,
   reducers: {
     setToken(state, action) {
@@ -95,70 +100,69 @@ const authSlice = createSlice({
       state.token = null;
     },
   },
-  extraReducers:(builder)=>{
+  extraReducers: (builder) => {
     builder
-          // Login Reducers
-          .addCase(loginUser.pending, (state) => {
-            state.error = null;
-            state.isLoggedIn = false;
-            state.isRefreshing = false;
-          })
-          .addCase(loginUser.fulfilled, (state, action) => {
-            state.user = action.payload.user;
-            state.token = action.payload.token;
-            state.isLoggedIn = true;
-            state.error = null;
-          })
-          .addCase(loginUser.rejected, (state, action) => {
-            state.error = action.payload || "Login failed";
-            state.isLoggedIn = false;
-          })
-    
-          // Register Reducers
-          .addCase(registerUser.pending, (state) => {
-            state.error = null;
-          })
-          .addCase(registerUser.fulfilled, (state, action) => {
-            state.user = action.payload.user;
-            state.isLoggedIn = false;
-            state.error = null;
-          })
-          .addCase(registerUser.rejected, (state, action) => {
-            state.error = action.payload || "Registration failed";
-            state.isLoggedIn = false;
-          })
-    
-          // Logout Reducers
-          .addCase(logoutUser.fulfilled, (state) => {
-            state.user = { name: null, email: null };
-            state.token = null;
-            state.isLoggedIn = false;
-            state.error = null;
-          })
-          .addCase(logoutUser.rejected, (state, action) => {
-            state.error = action.payload || "Logout failed";
-          })
-    
-          // Refresh Reducers
-          .addCase(refreshUser.pending, (state) => {
-            state.isRefreshing = true;
-          })
-          .addCase(refreshUser.fulfilled, (state, action) => {
-            state.user = action.payload;
-            state.isLoggedIn = true;
-            state.isRefreshing = false;
-          })
-          .addCase(refreshUser.rejected, (state, action) => {
-            state.error = action.payload || "Refresh failed";
-            state.isRefreshing = false;
-          })
-          .addCase('persist/REHYDRATE', (state, action) => {
-            // Redux Persist yeniden yükleme işlemi için varsayılan davranış
-            return action.payload ? { ...state, ...action.payload.auth } : state;
-          });
+      // Login Reducers
+      .addCase(loginUser.pending, (state) => {
+        state.error = null;
+        state.isLoggedIn = false;
+        state.isRefreshing = false;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+        state.error = null;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.error = action.payload || "Login failed";
+        state.isLoggedIn = false;
+      })
 
-  }
-})
+      // Register Reducers
+      .addCase(registerUser.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isLoggedIn = false;
+        state.error = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.error = action.payload || "Registration failed";
+        state.isLoggedIn = false;
+      })
+
+      // Logout Reducers
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
+        state.error = null;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.error = action.payload || "Logout failed";
+      })
+
+      // Refresh Reducers
+      .addCase(refreshUser.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.error = action.payload || "Refresh failed";
+        state.isRefreshing = false;
+      })
+      .addCase("persist/REHYDRATE", (state, action) => {
+        // Redux Persist yeniden yükleme işlemi için varsayılan davranış
+        return action.payload ? { ...state, ...action.payload.auth } : state;
+      });
+  },
+});
 export const { setToken } = authSlice.actions;
 
 export default authSlice.reducer;
