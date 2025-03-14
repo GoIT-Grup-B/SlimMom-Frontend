@@ -15,15 +15,10 @@ const SearchProducts = () => {
 		fetchData();
 	}, [query]);
 
-	console.log(filteredItems);
-
 	const handleChange = (e) => {
-			setQuery(e.target.value);
+		setQuery(e.target.value);
 	};
 
-	const filteredProducts = filteredItems.filter((item) => {
-		item;
-	});
 
 	return (
 		<form>
@@ -34,8 +29,8 @@ const SearchProducts = () => {
 				onChange={handleChange}
 			/>
 			<ul>
-				{filteredProducts.map((item) => (
-					<li key={item}>{item}</li>
+				{filteredItems.map((item) => (
+					<li key={item.id}>{item.title}</li>
 				))}
 			</ul>
 		</form>

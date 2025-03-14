@@ -1,9 +1,8 @@
-
-import Register from "./components/AuthNav/RegistrationForm/Register.jsx";
-import Login from "./components/AuthNav/LoginForm/Login.jsx";
+import Register from "../src/components/RegistrationForm/RegisterForm.jsx";
+import Login from "../src/components/LoginForm/LoginForm.jsx";
+import SearchProducts from "./components/SearchProducts.jsx";
 
 import "./App.css";
-import SearchProducts from "./components/SearchProducts.jsx";
 
 function App() {
 	return (
