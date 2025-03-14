@@ -1,31 +1,32 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import authReducer from './auth/slice'; 
+import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import authReducer from "./auth/slice";
+import myProductsReducer from "./myProducts/slice";
+import diaryProductsListItemReducer from "./diaryProductsListItem/slice"; //  Ekledik
 
 const authPersistConfig = {
-  key: 'auth', // Bu alan sadece auth reducer için kullanılacak
+  key: "auth",
   storage,
-  whitelist: ['token'], // Sadece token alanını persist etmek istiyoruz
+  whitelist: ["token"],
 };
-
-
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    auth: persistedAuthReducer, // auth reducer persist edilmiş haliyle atanıyor
+    auth: persistedAuthReducer,
+    myProducts: myProductsReducer,
+    diaryProductsListItem: diaryProductsListItemReducer, //  Buraya ekledik
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // redux-persist ile ilgili action'ları kontrol dışı bırak
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
       },
     }),
 });
 
-export default store;
-export let persistor = persistStore(store);
+export const persistor = persistStore(store);
 
+export default store;
