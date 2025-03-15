@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const RestrictadRoute = ({children}) => {
+const RestrictedRoute = ({children}) => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
@@ -15,4 +15,4 @@ const RestrictadRoute = ({children}) => {
   return children;
 }
 
-export default RestrictadRoute
+export default RestrictedRoute
