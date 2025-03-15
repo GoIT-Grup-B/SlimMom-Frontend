@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { registerUser } from "../../redux/auth/authOps";
-import Styles from "./RegisterForm.module.css";
 
 const Register = () => {
   const nameFieldId = useId();
@@ -47,57 +46,63 @@ const Register = () => {
       initialValues={{ name: "", email: "", password: "" }}
       validationSchema={registerSchema}
       onSubmit={handleSubmit}
+      className=""
     >
-      {({ handleChange }) => (
-        <Form className={Styles.formRegister}>
-          <h1 id="registerHeader" className={Styles.headerAuth}>
+            {({ handleChange }) => (
+        <Form className="flex flex-col space-y-6  items-start">
+          <h1 id="registerHeader" className="text-orange-500 font-bold">
             REGISTER
           </h1>
-
+          <div>
           <Field
             name="name"
             id={nameFieldId}
             type="text"
             placeholder="Name *"
-            className={Styles.formInputElement}
+            className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
             onChange={handleChange}
           />
-          <ErrorMessage name="name" component="div" className={Styles.error} />
+          <ErrorMessage name="name" component="div" className="" />
+          </div>
 
+          <div>
           <Field
             name="email"
             id={emailFieldId}
             type="email"
             placeholder="Email *"
-            className={Styles.formInputElement}
+            className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
             onChange={handleChange}
           />
-          <ErrorMessage name="email" component="div" className={Styles.error} />
+          <ErrorMessage name="email" component="div" className="" />
+          </div>
 
+          <div>
           <Field
             name="password"
             id={passwordFieldId}
             type="password"
             placeholder="Password *"
-            className={Styles.formInputElement}
+            className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
             onChange={handleChange}
           />
           <ErrorMessage
             name="password"
             component="div"
-            className={Styles.error}
+            className=""
           />
+          </div>
 
-          <div className={Styles.buttonAuth}>
+          <div className="">
             <button
               type="submit"
-              className="bg-[#FC842D] text-white px-14 py-2 rounded-full hover:bg-orange-600"
+              className="bg-[#FC842D] text-white px-14 py-2 rounded-full hover:bg-orange-600 mr-10"
             >
               Register
             </button>
             <button
               type="button"
-              className="bg-gray-500 text-white px-14 py-2 rounded-full hover:bg-gray-700"
+              className="bg-white text-[#FC842D] px-14 py-2 rounded-full hover:bg-orange-600 border-orange-500 border-2"
               onClick={() => navigate("/login")}
             >
               Login
@@ -105,6 +110,7 @@ const Register = () => {
           </div>
         </Form>
       )}
+
     </Formik>
   );
 };

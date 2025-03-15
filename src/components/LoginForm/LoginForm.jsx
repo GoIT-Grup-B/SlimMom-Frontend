@@ -1,5 +1,4 @@
 import { useId } from "react";
-import Styles from "./LoginForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
@@ -42,49 +41,49 @@ const Login = () => {
       onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
-        <div className={Styles.container}>
-          <h1 id="loginHeader" className={Styles.headerAuth}>
+        <div className="">
+          <Form className="flex flex-col items-start space-y-6">
+          <h1 id="loginHeader" className="text-orange-500 font-bold mb-10">
             LOGIN
           </h1>
-          <Form className={Styles.formRegister}>
             {/* Email Input */}
-            <div className={Styles.inputWrapper}>
+            <div className="">
               <Field
                 name="email"
                 id={emailFieldId}
                 type="email"
                 placeholder="Email *"
-                className={Styles.formInputElement}
+                className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
               />
               <ErrorMessage
                 name="email"
                 component="div"
-                className={Styles.errorMessage}
+                className=""
               />
             </div>
 
             {/* Password Input */}
-            <div className={Styles.inputWrapper}>
+            <div className="">
               <Field
                 name="password"
                 id={passwordFieldId}
                 type="password"
                 placeholder="Password *"
-                className={Styles.formInputElement}
+                className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
               />
               <ErrorMessage
                 name="password"
                 component="div"
-                className={Styles.errorMessage}
+                className=""
               />
             </div>
 
             {/* Butonlar */}
-            <div className={Styles.buttonAuth}>
+            <div className="">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`bg-[#FC842D] text-white px-14 py-2 rounded-full hover:bg-orange-600 ${
+                className={`bg-[#FC842D] text-white px-14 py-2 rounded-full hover:bg-orange-600 mr-10 ${
                   isSubmitting ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
