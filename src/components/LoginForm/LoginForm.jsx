@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../../redux/auth/authOps";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const emailFieldId = useId();
   const passwordFieldId = useId();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     console.log("Form gönderiliyor:", values); // Test için log ekledik
@@ -92,6 +94,7 @@ const Login = () => {
               <button
                 type="button"
                 className="bg-white text-[#FC842D] px-14 py-2 rounded-full hover:bg-orange-600 border-orange-500 border-2"
+                onClick={()=>{navigate('/auth/register')}}
               >
                 Register
               </button>

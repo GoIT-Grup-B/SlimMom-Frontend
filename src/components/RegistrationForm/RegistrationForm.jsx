@@ -27,7 +27,10 @@ const Register = () => {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      await dispatch(registerUser(values));
+      const {name,email,password}=values;
+      console.log(values);
+      await dispatch(registerUser({name,email,password}));
+      console.log(registerUser({name,email,password}));
       toast.success("Registration is successful.");
       resetForm();
       navigate("/login");
@@ -103,7 +106,7 @@ const Register = () => {
             <button
               type="button"
               className="bg-white text-[#FC842D] px-14 py-2 rounded-full hover:bg-orange-600 border-orange-500 border-2"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/auth/login")}
             >
               Login
             </button>
