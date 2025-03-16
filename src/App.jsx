@@ -7,6 +7,7 @@ const App = () => {
     <div>
       <RegistirationPage />
       <LoginPage />
+      <RightSideBar />
     </div>
   );
 };
