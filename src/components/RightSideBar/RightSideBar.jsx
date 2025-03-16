@@ -16,7 +16,7 @@ return (
               <span>Daily rate</span> <span> kcal</span>
             </li>
             <li className="flex justify-between">
-              <span>n% of normal</span> <span> %</span>
+              <span>n% of normal</span> <span> 1%</span>
             </li>
           </ul>
         </div>
