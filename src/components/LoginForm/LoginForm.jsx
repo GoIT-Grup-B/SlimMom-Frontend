@@ -49,13 +49,13 @@ const Login = () => {
               LOGIN
             </h1>
             {/* Email Input */}
-            <div className="">
+            <div className="flex flex-col md:flex-row">
               <Field
                 name="email"
                 id={emailFieldId}
                 type="email"
                 placeholder="Email *"
-                className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
+                className="flex-1 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
               />
               <ErrorMessage
                 name="email"
@@ -65,13 +65,13 @@ const Login = () => {
             </div>
 
             {/* Password Input */}
-            <div className="">
+            <div className="flex flex-col md:flex-row">
               <Field
                 name="password"
                 id={passwordFieldId}
                 type="password"
                 placeholder="Password *"
-                className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
+                className="flex-1 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
               />
               <ErrorMessage
                 name="password"
