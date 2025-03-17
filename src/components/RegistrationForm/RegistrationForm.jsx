@@ -59,7 +59,7 @@ const Register = () => {
           <h1 id="registerHeader" className="text-orange-500 font-bold">
             REGISTER
           </h1>
-          <div>
+          <div className=''>
             <Field
               name="name"
               id={nameFieldId}
@@ -108,16 +108,16 @@ const Register = () => {
             />
           </div>
 
-          <div className="">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               type="submit"
-              className="bg-[#FC842D] text-white px-14 py-2 rounded-full hover:bg-orange-600 mr-10"
+              className="bg-[#FC842D] text-white px-6 py-2  rounded-full hover:bg-orange-600"
             >
               Register
             </button>
             <button
               type="button"
-              className="bg-white text-[#FC842D] px-14 py-2 rounded-full hover:bg-orange-600 border-orange-500 border-2"
+              className="bg-white text-[#FC842D] px-6 py-2 rounded-full hover:bg-orange-600 border-orange-500 border-2"
               onClick={() => navigate('/auth/login')}
             >
               Login

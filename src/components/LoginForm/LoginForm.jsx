@@ -44,7 +44,7 @@ const Login = () => {
     >
       {({ isSubmitting }) => (
         <div className="">
-          <Form className="flex flex-col items-start space-y-6">
+          <Form className="flex flex-col items-start space-y-6 sm:gap-5 w-full p-2">
             <h1 id="loginHeader" className="text-orange-500 font-bold mb-10">
               LOGIN
             </h1>
@@ -81,11 +81,11 @@ const Login = () => {
             </div>
 
             {/* Butonlar */}
-            <div className="">
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`bg-[#FC842D] text-white px-14 py-2 rounded-full hover:bg-orange-600 mr-10 ${
+                className={`bg-[#FC842D] text-white px-6 py-2 rounded-full hover:bg-orange-600 ${
                   isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
@@ -93,7 +93,7 @@ const Login = () => {
               </button>
               <button
                 type="button"
-                className="bg-white text-[#FC842D] px-14 py-2 rounded-full hover:bg-orange-600 border-orange-500 border-2"
+                className="bg-white text-[#FC842D] px-6 py-2 rounded-full hover:bg-orange-600 border-orange-500 border-2"
                 onClick={() => {
                   navigate('/auth/register');
                 }}
