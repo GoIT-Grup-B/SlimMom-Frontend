@@ -8,19 +8,22 @@ const DiaryAddProductForm = () => {
   const [filteredItems, setFilteredItems] = useState([]);
   const [weight, setWeight] = useState('');
   const [date, setDate] = useState(new Date());
+  const [itemId, setItemId] = useState('');
 
   async function addProduct(item) {
     console.log('date:', date);
-    console.log('item:', item);
-    console.log('weight', weight);
-    await axios.post(
-      'https://slimmom-backend-s8n8.onrender.com/user/products',
-      {
-        productId: item,
-        productWeight: weight,
-        date: date,
-      },
-    );
+    if (item && weight) {
+      console.log('item:', item);
+      console.log('weight', weight);
+      await axios.post(
+        'https://slimmom-backend-s8n8.onrender.com/user/products',
+        {
+          productId: item,
+          productWeight: weight,
+          date: date,
+        },
+      );
+    }
   }
 
   useEffect(() => {
@@ -54,7 +57,10 @@ const DiaryAddProductForm = () => {
         />
         <button
           className="bg-[#FC842D] rounded-full cursor-pointer w-10 h-10 drop-shadow-2xl justify-items-center"
-          onClick={addProduct()}
+          onClick={(e) => {
+            e.preventDefault();
+            addProduct(itemId);
+          }}
         >
           <img src={addVector} className="w-5 h-5" />
         </button>
@@ -64,9 +70,9 @@ const DiaryAddProductForm = () => {
           <li
             key={item._id}
             className="cursor-pointer hover:bg-gray-200"
-            onClick={(e) => {
-              e.preventDefault;
-              addProduct(item._id);
+            onClick={() => {
+              setQuery(item.title);
+              setItemId(item._id);
             }}
           >
             {item.title}
