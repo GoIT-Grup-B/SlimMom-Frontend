@@ -10,18 +10,23 @@ const DiaryAddProductForm = () => {
   const [date, setDate] = useState(new Date());
   const [itemId, setItemId] = useState('');
 
-  async function addProduct(item) {
+  axios.interceptors.request.use((request) => {
+    console.log('Request:', request);
+    return request;
+  });
+
+  async function addProduct(itemId) {
     console.log('date:', date);
-    if (item && weight) {
-      console.log('item:', item);
+    if (itemId && weight) {
+      console.log('item:', itemId);
       console.log('weight', weight);
       await axios.post(
         'https://slimmom-backend-s8n8.onrender.com/user/products',
-        {
-          productId: item,
-          productWeight: weight,
-          date: date,
-        },
+          {
+              productId: itemId,
+              productWeight: weight,
+              date: date,
+          }
       );
     }
   }
