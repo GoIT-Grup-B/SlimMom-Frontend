@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 
 const RightSideBar = () => {
-  // Dummy state - Arkadaşlar yapana kadar
+  // Dummy state - DiaryDateCalender yapılınca gerçek veri çekilir.
   const [selectedDate, setSelectedDate] = useState('13.03.2025');
 
+  // Dummy data - SummaryData yapılınca gerçek veri çekilir.
   const summaryData = {
     left: 600,
     consumed: 1400,
     dailyRate: 2000,
     percentage: 70,
   };
-
+// Dummy data - NotRecommendedData yapılınca gerçek veri çekilir.
   const notRecommended = ['Bread', 'Milk', 'Pork meat', 'Eggplant', 'Nuts'];
 
   return (
