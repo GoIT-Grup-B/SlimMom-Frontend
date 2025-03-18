@@ -8,14 +8,20 @@ const RegistrationPage = () => {
   const { isLoggedIn, error } = useSelector((store) => store.user);
   const navigate = useNavigate();
 
+  useEffect(()=>{
+    if(isLoggedIn){
+      navigate('/',  { replace: true });
+    }
+  },[isLoggedIn, navigate]);
+
   useEffect(() => {
-    if (error) toast.error(error.message);
-  }, [ error, navigate]);
+    if (error) toast.error(error);
+  }, [ error ]);
 
   return (
     <>
       {error && (
-        <p>Whoops, something went wrong! Please try reloading this page!</p>
+        <p className="text-red-500">Whoops, something went wrong! Please try reloading this page!</p>
       )}
       {!isLoggedIn && (
         <p>Loading register</p>
