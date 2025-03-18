@@ -44,18 +44,18 @@ const Login = () => {
     >
       {({ isSubmitting }) => (
         <div className="">
-          <Form className="flex flex-col items-start space-y-6">
+          <Form className="flex flex-col items-start space-y-6 sm:gap-5 w-full justify-center p-2 md:p-8">
             <h1 id="loginHeader" className="text-orange-500 font-bold mb-10">
               LOGIN
             </h1>
             {/* Email Input */}
-            <div className="">
+            <div className="flex flex-col md:flex-row">
               <Field
                 name="email"
                 id={emailFieldId}
                 type="email"
                 placeholder="Email *"
-                className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
+                className="flex-1 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
               />
               <ErrorMessage
                 name="email"
@@ -65,13 +65,13 @@ const Login = () => {
             </div>
 
             {/* Password Input */}
-            <div className="">
+            <div className="flex flex-col md:flex-row">
               <Field
                 name="password"
                 id={passwordFieldId}
                 type="password"
                 placeholder="Password *"
-                className="w-100 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
+                className="flex-1 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
               />
               <ErrorMessage
                 name="password"
@@ -81,11 +81,11 @@ const Login = () => {
             </div>
 
             {/* Butonlar */}
-            <div className="">
+            <div className="flex flex-col sm:flex-row gap-5">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`bg-[#FC842D] text-white px-14 py-2 rounded-full hover:bg-orange-600 mr-10 ${
+                className={`bg-[#FC842D] text-white px-6 py-2 w-30 h-10  rounded-full hover:bg-orange-600 ${
                   isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
@@ -93,7 +93,7 @@ const Login = () => {
               </button>
               <button
                 type="button"
-                className="bg-white text-[#FC842D] px-14 py-2 rounded-full hover:bg-orange-600 border-orange-500 border-2"
+                className="bg-white text-[#FC842D] px-6 py-2 w-30 h-10  rounded-full hover:bg-orange-600 border-orange-500 border-2"
                 onClick={() => {
                   navigate('/auth/register');
                 }}

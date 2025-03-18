@@ -28,7 +28,7 @@ export const loginUser = createAsyncThunk(
         email,
         password,
       });
-      const token = response.data.token;
+      const token = response.data.data.accessToken;
 
       dispatch(setToken(token));
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // Otomatik ekleme
