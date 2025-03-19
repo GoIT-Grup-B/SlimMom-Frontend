@@ -3,7 +3,7 @@ import addVector from '../../assets/svg/add.svg';
 import axios from 'axios';
 import { DiaryDateСalendar } from '../DiaryDateСalendar/DiaryDateСalendar';
 
-const DiaryAddProductForm = ({date, setDate}) => {
+const DiaryAddProductForm = ({ date, setDate }) => {
   const [query, setQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [weight, setWeight] = useState('');
@@ -17,11 +17,11 @@ const DiaryAddProductForm = ({date, setDate}) => {
     if (itemId && weight) {
       await axios.post(
         'https://slimmom-backend-s8n8.onrender.com/user/products',
-          {
-              productId: itemId,
-              productWeight: weight,
-              date: date,
-          }
+        {
+          productId: itemId,
+          productWeight: weight,
+          date: date,
+        },
       );
     }
   }
@@ -33,6 +33,8 @@ const DiaryAddProductForm = ({date, setDate}) => {
           `https://slimmom-backend-s8n8.onrender.com/products/searchProducts?title=${query}`,
         );
         setFilteredItems(data.data.data);
+      } else {
+        setFilteredItems([]);
       }
     }
     fetchData();

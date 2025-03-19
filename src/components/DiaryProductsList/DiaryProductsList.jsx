@@ -19,15 +19,16 @@ export const DiaryProductsList = ({ date }) => {
     <>
       <ul>
         {products.map((product) => (
-          <li key={product._id}>
-            <DiaryProductsListItem
-              name={product.productId.title}
-              grams={product.productWeight}
-              calories={
-                (product.productId.calories * product.productWeight) / 100
-              }
-            />
-          </li>
+          <DiaryProductsListItem
+            key={product._id}
+            name={product.productId.title}
+            grams={product.productWeight}
+            calories={
+              (product.productId.calories * product.productWeight) / 100
+            }
+            id={product.productId._id}
+            date={date}
+          />
         ))}
       </ul>
     </>
