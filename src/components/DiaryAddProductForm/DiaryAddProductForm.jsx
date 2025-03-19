@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import addVector from '../../assets/svg/Vector.svg';
+import addVector from '../../assets/svg/add.svg';
 import axios from 'axios';
 import { DiaryDateСalendar } from '../DiaryDateСalendar/DiaryDateСalendar';
 
-const DiaryAddProductForm = () => {
+const DiaryAddProductForm = ({date, setDate}) => {
   const [query, setQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [weight, setWeight] = useState('');
-  const [date, setDate] = useState(new Date());
   const [itemId, setItemId] = useState('');
 
   axios.interceptors.request.use((request) => {
