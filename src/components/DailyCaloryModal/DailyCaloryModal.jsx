@@ -15,8 +15,18 @@ function DailyCaloryModal({ setDailyRate, dailyRate }) {
     };
   }, [setDailyRate]);
 
+  const handleOutsideClick = (e) => {
+    if (e.target.id === 'modal-overlay') {
+      setDailyRate(null);
+    }
+  };
+
   return (
-    <div className="absolute w-full h-full bg-white md:bg-gray-500/50 flex items-center justify-center">
+    <div
+      id="modal-overlay"
+      onClick={(e) => handleOutsideClick(e)}
+      className="absolute w-full h-full bg-white md:bg-gray-500/50 flex items-center justify-center"
+    >
       <div className="py-[40px] px-[20px] flex flex-col  bg-white  ">
         <h2 className="font-bold text-[18px]">
           Your recommended daily calorie intake is
