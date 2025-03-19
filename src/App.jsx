@@ -6,7 +6,6 @@ import { Toaster } from 'react-hot-toast';
 import Background from './components/Background/Background';
 import DiaryPage from './pages/DiaryPage/DiaryPage';
 
-
 const App = () => {
   return (
     <div>
