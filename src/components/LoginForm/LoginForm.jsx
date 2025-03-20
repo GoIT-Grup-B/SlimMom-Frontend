@@ -85,7 +85,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`bg-[#FC842D] text-white px-6 py-2 w-30 h-10  rounded-full hover:bg-orange-600 ${
+                className={`bg-[#FC842D] cursor-pointer text-white px-6 py-2 w-30 h-10  rounded-full hover:bg-orange-600 ${
                   isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
@@ -93,7 +93,7 @@ const Login = () => {
               </button>
               <button
                 type="button"
-                className="bg-white text-[#FC842D] px-6 py-2 w-30 h-10  rounded-full hover:bg-orange-600 border-orange-500 border-2"
+                className="bg-white cursor-pointer text-[#FC842D] px-6 py-2 w-30 h-10  rounded-full hover:bg-orange-600 border-orange-500 border-2"
                 onClick={() => {
                   navigate('/auth/register');
                 }}
