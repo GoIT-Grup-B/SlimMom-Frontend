@@ -1,25 +1,31 @@
+import LoginForm from '../../components/LoginForm/LoginForm';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Login from '../components/Login';
+import toast, { Toaster } from 'react-hot-toast';
 
-const LoginPage = () => {
+const Login = () => {
+  const { isLoggedIn, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/diary'); // Kullanıcı giriş yaptıysa yönlendir
+    if (isLoggedIn) {
+      navigate('/', { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message || 'An error occurred!');
+    }
+  }, [error]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 shadow-md rounded-lg w-full max-w-md">
-        <Login />
-      </div>
+    <div className="">
+      <LoginForm />
+      <Toaster />
     </div>
   );
 };
 
-export default LoginPage;
+export default Login;
