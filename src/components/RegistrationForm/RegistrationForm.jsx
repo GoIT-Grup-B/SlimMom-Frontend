@@ -55,11 +55,11 @@ const Register = () => {
       onSubmit={handleSubmit}
     >
       {({ handleChange }) => (
-          <Form className="flex flex-col items-start space-y-6 sm:gap-5 w-full justify-center p-2 md:p-8">
+        <Form className="flex flex-col items-start space-y-6 sm:gap-5 w-full justify-center p-2 md:p-8">
           <h1 id="registerHeader" className="text-orange-500 font-bold">
             REGISTER
           </h1>
-          <div className='flex flex-col md:flex-row'>
+          <div className="flex flex-col md:flex-row">
             <Field
               name="name"
               id={nameFieldId}
@@ -76,7 +76,7 @@ const Register = () => {
             />
           </div>
 
-          <div className='flex flex-col md:flex-row'>
+          <div className="flex flex-col md:flex-row">
             <Field
               name="email"
               id={emailFieldId}
@@ -92,7 +92,7 @@ const Register = () => {
             />
           </div>
 
-          <div className='flex flex-col md:flex-row'>
+          <div className="flex flex-col md:flex-row">
             <Field
               name="password"
               id={passwordFieldId}
@@ -111,13 +111,13 @@ const Register = () => {
           <div className="flex flex-col sm:flex-row gap-5">
             <button
               type="submit"
-              className="bg-[#FC842D] text-white px-6 py-2 w-30 h-10 rounded-full hover:bg-orange-600"
+              className="bg-[#FC842D] cursor-pointer text-white px-6 py-2 w-30 h-10 rounded-full hover:bg-orange-600"
             >
               Register
             </button>
             <button
               type="button"
-              className="bg-white text-[#FC842D] px-6 py-2 w-30 h-10 rounded-full hover:bg-orange-600 border-orange-500 border-2"
+              className="bg-white cursor-pointer text-[#FC842D] px-6 py-2 w-30 h-10 rounded-full hover:bg-orange-600 border-orange-500 border-2"
               onClick={() => navigate('/auth/login')}
             >
               Login
