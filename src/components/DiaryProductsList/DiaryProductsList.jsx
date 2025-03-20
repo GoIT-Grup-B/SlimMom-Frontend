@@ -15,22 +15,31 @@ export const DiaryProductsList = ({ date }) => {
     }
     getProducts();
   }, [date]);
+
+  function handleDelete(id) {
+    setProducts((prev) =>
+      prev.filter((product) => product.productId._id !== id),
+    );
+  }
   return (
     <>
-      <ul>
-        {products.map((product) => (
-          <DiaryProductsListItem
-            key={product._id}
-            name={product.productId.title}
-            grams={product.productWeight}
-            calories={
-              (product.productId.calories * product.productWeight) / 100
-            }
-            id={product.productId._id}
-            date={date}
-          />
-        ))}
-      </ul>
+      {
+        <ul>
+          {products.map((product) => (
+            <DiaryProductsListItem
+              key={product._id}
+              name={product.productId.title}
+              grams={product.productWeight}
+              calories={
+                (product.productId.calories * product.productWeight) / 100
+              }
+              id={product.productId._id}
+              date={date}
+              onDelete={handleDelete}
+            />
+          ))}
+        </ul>
+      }
     </>
   );
 };
