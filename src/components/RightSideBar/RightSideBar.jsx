@@ -1,51 +1,79 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchDailyRate,
+  fetchDailyCalories,
+} from '../../redux/dailySummary/dailySummaryOps';
 
-const RightSideBar = () => {
-  // Dummy state - DiaryDateCalender yapılınca gerçek veri çekilir.
-  const [selectedDate, setSelectedDate] = useState('13.03.2025');
+const RightSideBar = ({ selectedDate }) => {
+  const dispatch = useDispatch();
 
-  // Dummy data - SummaryData yapılınca gerçek veri çekilir.
-  const summaryData = {
-    left: 600,
-    consumed: 1400,
-    dailyRate: 2000,
-    percentage: 70,
-  };
-// Dummy data - NotRecommendedData yapılınca gerçek veri çekilir.
-  const notRecommended = ['Bread', 'Milk', 'Pork meat', 'Eggplant', 'Nuts'];
+  // Redux state
+  const {
+    dailyRate,
+    notAllowedFoods,
+    consumedCalories,
+    leftCalories,
+    loading,
+    error,
+  } = useSelector((state) => state.dailySummary);
+
+  // Login olmuş kullanıcıdan token al
+  const token = useSelector((state) => state.auth.token);
+
+  // useEffect → tarih değişince kalori verisini çek
+  useEffect(() => {
+    if (token && selectedDate) {
+      dispatch(fetchDailyCalories(selectedDate));
+    }
+  }, [dispatch, token, selectedDate]);
+
+  // Dummy → Bilgiler calculator'dan gelince fetchDailyRate çağırılacak
+  // dispatch(fetchDailyRate(userData)); // Start Losing Weight butonunda çağırılır
 
   return (
     <aside className="flex flex-col gap-8 w-full md:w-[300px] p-4 bg-gray-50 rounded-lg shadow-md">
-      {/* Summary Section */}
-      <div className="w-full">
-        <h3 className="font-verdana font-bold text-sm mb-4">
+      {/* Summary */}
+      <div>
+        <h3 className="font-verdana font-bold text-sm mb-4 tracking-wider">
           Summary for {selectedDate}
         </h3>
-        <ul className="space-y-2 text-gray-700">
-          <li className="flex justify-between">
-            <span>Left</span>
-            <span>{summaryData.left} kcal</span>
-          </li>
-          <li className="flex justify-between">
-            <span>Consumed</span>
-            <span>{summaryData.consumed} kcal</span>
-          </li>
-          <li className="flex justify-between">
-            <span>Daily rate</span>
-            <span>{summaryData.dailyRate} kcal</span>
-          </li>
-          <li className="flex justify-between">
-            <span>{summaryData.percentage}% of normal</span>
-          </li>
-        </ul>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : (
+          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] leading-[14px] tracking-[0.04em] space-y-2">
+            <li className="flex justify-between">
+              <span>Left</span>
+              <span>{leftCalories ?? 0} kcal</span>
+            </li>
+            <li className="flex justify-between">
+              <span>Consumed</span>
+              <span>{consumedCalories ?? 0} kcal</span>
+            </li>
+            <li className="flex justify-between">
+              <span>Daily rate</span>
+              <span>{dailyRate ?? 0} kcal</span>
+            </li>
+            <li className="flex justify-between">
+               <span>n% of normal</span>
+               <span>
+                 {dailyRate
+                  ? `${Math.round((consumedCalories / dailyRate) * 100)}%`
+                  : '0%'}
+                 </span>
+            </li>
+          </ul>
+        )}
       </div>
 
-      {/* Food Not Recommended Section */}
-      <div className="w-full">
+      {/* Not Recommended Foods */}
+      <div>
         <h3 className="text-md font-bold mb-3">Food not recommended</h3>
-        {notRecommended.length > 0 ? (
-          <ul className="list-disc list-inside text-gray-600 space-y-1">
-            {notRecommended.map((item, idx) => (
+        {notAllowedFoods?.length > 0 ? (
+          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] list-decimal list-inside">
+            {notAllowedFoods.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}
           </ul>
