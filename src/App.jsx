@@ -11,12 +11,12 @@ import UserInfo from './components/UserInfo/UserInfo';
 const App = () => {
   return (
     <div>
-      <UserInfo />
+      {/* <UserInfo /> */}
       <Background>
-        <RegistirationPage />
+        {/* <RegistirationPage />
         <LoginPage />
         <RightSideBar />
-        <DiaryPage />
+        <DiaryPage /> */}
         <CalculatorCalorieForm />
         <Toaster />
       </Background>
