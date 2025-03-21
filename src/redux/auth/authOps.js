@@ -29,14 +29,13 @@ export const loginUser = createAsyncThunk(
         password,
       });
 
-      // API'den gelen token'ın nerede olduğuna dikkat et!
       const token = response.data?.data?.accessToken || response.data?.token;
 
       if (!token) {
         throw new Error('No token received from API!');
       }
 
-      dispatch(setToken(token)); // Redux'a kaydediyoruz
+      dispatch(setToken(token));
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       return response.data;
@@ -69,7 +68,7 @@ export const refreshUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { getState, rejectWithValue }) => {
-    const token = getState().auth.token; // Redux store'dan token al
+    const token = getState().auth.token;
     if (!token) {
       console.warn('Logout failed: No token found in Redux store!');
       return rejectWithValue('No token found');
@@ -79,7 +78,7 @@ export const logoutUser = createAsyncThunk(
       const response = await axios.post(`${API_URL}/auth/logout`, null, {
         headers: {
           Accept: '*/*',
-          Authorization: `Bearer ${token}`, // Tokenı doğru formatta gönderiyoruz
+          Authorization: `Bearer ${token}`,
         },
       });
 
