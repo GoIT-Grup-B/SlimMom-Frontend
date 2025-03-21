@@ -3,7 +3,7 @@ import {
   calculatorInitialValues,
 } from '../../validations/schemas/calculatorSchema';
 import { Formik, Form } from 'formik';
-import CalculatorFormFields from './CalculatorFormFields';
+import CalculatorFormFields from '../CalculatorFormFields.jsx/CalculatorFormFields';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
