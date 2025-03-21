@@ -10,26 +10,38 @@ export const DiaryProductsList = ({ date }) => {
       const response = await axios.get(
         `https://slimmom-backend-s8n8.onrender.com/user/products?date=${date}`,
       );
-      setProducts(response.data.products);
-      console.log('PRODUCTS:', response.data.products);
+      if (response.status === 200) {
+        setProducts(response.data.products);
+        console.log('PRODUCTS:', response);
+      }
     }
     getProducts();
   }, [date]);
+
+  function handleDelete(id) {
+    setProducts((prev) =>
+      prev.filter((product) => product.productId._id !== id),
+    );
+  }
   return (
     <>
-      <ul>
-        {products.map((product) => (
-          <li key={product._id}>
+      {
+        <ul>
+          {products.map((product) => (
             <DiaryProductsListItem
+              key={product._id}
               name={product.productId.title}
               grams={product.productWeight}
               calories={
                 (product.productId.calories * product.productWeight) / 100
               }
+              id={product.productId._id}
+              date={date}
+              onDelete={handleDelete}
             />
-          </li>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      }
     </>
   );
 };

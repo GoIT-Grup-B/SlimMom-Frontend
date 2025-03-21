@@ -5,17 +5,18 @@ import CalculatorCalorieForm from './components/CalculatorСalorieForm/Calculato
 import { Toaster } from 'react-hot-toast';
 import Background from './components/Background/Background';
 import DiaryPage from './pages/DiaryPage/DiaryPage';
+//import AppRoutes from './routers/AppRoutes'
 import UserInfo from './components/UserInfo/UserInfo';
 
 const App = () => {
   return (
     <div>
-      <UserInfo />
+      {/* <UserInfo /> */}
       <Background>
-        <RegistirationPage />
+        {/* <RegistirationPage />
         <LoginPage />
         <RightSideBar />
-        <DiaryPage />
+        <DiaryPage /> */}
         <CalculatorCalorieForm />
         <Toaster />
       </Background>
@@ -24,3 +25,6 @@ const App = () => {
 };
 
 export default App;
+//      <main>
+//          <AppRoutes/>
+//      </main>
