@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, loginUser, logoutUser, refreshUser } from "./authOps";
+import { createSlice } from '@reduxjs/toolkit';
+import { registerUser, loginUser, logoutUser, refreshUser } from './authOps';
 
 export const initialState = {
   user: {
     name: null,
     email: null,
-    password: "",
+    password: '',
   },
   token: null,
   isLoggedIn: false,
@@ -14,7 +14,7 @@ export const initialState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     setToken(state, action) {
@@ -41,7 +41,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.error = action.payload || "Login failed";
+        state.error = action.payload || 'Login failed';
         state.isLoggedIn = false;
       })
 
@@ -55,7 +55,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.error = action.payload || "Registration failed";
+        state.error = action.payload || 'Registration failed';
         state.isLoggedIn = false;
       })
 
@@ -67,7 +67,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(logoutUser.rejected, (state, action) => {
-        state.error = action.payload || "Logout failed";
+        state.error = action.payload || 'Logout failed';
       })
 
       // Refresh Reducers
@@ -80,10 +80,10 @@ const authSlice = createSlice({
         state.isRefreshing = false;
       })
       .addCase(refreshUser.rejected, (state, action) => {
-        state.error = action.payload || "Refresh failed";
+        state.error = action.payload || 'Refresh failed';
         state.isRefreshing = false;
       })
-      .addCase("persist/REHYDRATE", (state, action) => {
+      .addCase('persist/REHYDRATE', (state, action) => {
         // Redux Persist yeniden yükleme işlemi için varsayılan davranış
         return action.payload ? { ...state, ...action.payload.auth } : state;
       });

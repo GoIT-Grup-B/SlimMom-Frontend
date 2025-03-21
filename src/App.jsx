@@ -6,16 +6,19 @@ import { Toaster } from 'react-hot-toast';
 import Background from './components/Background/Background';
 import DiaryPage from './pages/DiaryPage/DiaryPage';
 //import AppRoutes from './routers/AppRoutes'
+import UserInfo from './components/UserInfo/UserInfo';
+
 const App = () => {
   return (
     <div>
+      <UserInfo />
       <Background>
-      <RegistirationPage />
-      <LoginPage />
-      <RightSideBar />
-      <DiaryPage />
-      <CalculatorCalorieForm />
-      <Toaster />
+        <RegistirationPage />
+        <LoginPage />
+        <RightSideBar />
+        <DiaryPage />
+        <CalculatorCalorieForm />
+        <Toaster />
       </Background>
     </div>
   );
