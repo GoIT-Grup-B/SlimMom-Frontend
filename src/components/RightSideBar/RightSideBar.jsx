@@ -28,7 +28,7 @@ const RightSideBar = ({ selectedDate }) => {
     }
   }, [dispatch, token, selectedDate]);
 
-  // Dummy → Bilgiler calculator'dan gelince fetchDailyRate çağırılacak
+  // Bilgiler calculator'dan gelince fetchDailyRate çağırılacak
   // dispatch(fetchDailyRate(userData)); // Start Losing Weight butonunda çağırılır
 
   return (
