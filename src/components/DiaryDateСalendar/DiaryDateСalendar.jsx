@@ -5,9 +5,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 export const DiaryDateСalendar = ({ date, setDate }) => {
   return (
     <DatePicker
-      dateFormat="dd/MM/yyyy"
+      dateFormat="dd.MM.yyyy"
       selected={date}
       onChange={(date) => setDate(date)}
+      className="text-xl font-bold w-[116px] h-[20px]"
     />
   );
 };

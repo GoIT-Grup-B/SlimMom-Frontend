@@ -10,8 +10,10 @@ export const DiaryProductsList = ({ date }) => {
       const response = await axios.get(
         `https://slimmom-backend-s8n8.onrender.com/user/products?date=${date}`,
       );
-      setProducts(response.data.products);
-      console.log('PRODUCTS:', response.data.products);
+      if (response.status === 200) {
+        setProducts(response.data.products);
+        console.log('PRODUCTS:', response);
+      }
     }
     getProducts();
   }, [date]);
