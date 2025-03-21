@@ -5,7 +5,7 @@ import CalculatorCalorieForm from './components/CalculatorСalorieForm/Calculato
 import { Toaster } from 'react-hot-toast';
 import Background from './components/Background/Background';
 import DiaryPage from './pages/DiaryPage/DiaryPage';
-
+//import AppRoutes from './routers/AppRoutes'
 const App = () => {
   return (
     <div>
@@ -23,5 +23,5 @@ const App = () => {
 
 export default App;
 //      <main>
-// <AppRoutes/>
-// </main>
+//          <AppRoutes/>
+//      </main>

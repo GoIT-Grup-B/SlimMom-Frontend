@@ -43,7 +43,6 @@ const AppRoutes = () => {
                 <Route>
                     <PrivateRoute>
                         <Header/>
-                    
                     </PrivateRoute>
                 </Route>
  
