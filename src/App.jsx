@@ -12,14 +12,16 @@ import Header from './components/Header/Header';
 const App = () => {
   return (
     <div>
-      {/* <UserInfo /> */}
+      <UserInfo />
       <Header />
       <Background>
         {
-          /* <RegistirationPage />
-        <LoginPage />
-        <RightSideBar />*/
-          <DiaryPage />
+          /* <RegistirationPage />*/
+          <>
+            <LoginPage />
+            <RightSideBar />
+            <DiaryPage />
+          </>
         }
         <CalculatorCalorieForm />
         <Toaster />
