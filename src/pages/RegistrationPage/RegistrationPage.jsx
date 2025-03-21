@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
 
 const RegistrationPage = () => {
-  const { isLoggedIn, error } = useSelector((store) => store.user);
+  const { isLoggedIn, error } = useSelector((store) => store.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
