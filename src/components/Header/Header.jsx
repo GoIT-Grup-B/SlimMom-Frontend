@@ -1,55 +1,76 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { signOutUser } from '../../redux/auth/authOps';
+import React, { useState } from 'react';
+import Logo from '../../../public/logo.svg';
 
 const Header = () => {
-    const selectUser = useSelector(state => state.auth.user);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = useSelector(state => state.auth.user);
-    const token = useSelector(state => state.auth.token);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [error, setError] = useState(null);
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    setUsername('Nic');
+  };
 
-    const handleSignOut = () => {
-        dispatch(signOutUser());
-        navigate('/');
-    
-        const handleLogOutClick = () => { setIsModalOpen(true); };
-    };
-    
-    const confirmLogout = async () => {
-        try {
-            setError(null);
-            const result = await dispatch(signOutUser(token)).unwrap();
-            if (result.success) {
-                navigate('/login');
-            } else {
-                setError('Something went wrong. Please try again.');
-            }
-        } catch (error) {
-            setError(error.message || 'Something went wrong. Please try again.');
-        } finally {
-            setIsModalOpen(false);
-        }
-    }
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername('');
+  };
 
-    const cancelLogout = () => {
-        setIsModalOpen(false);
-    };
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
+  return (
+    <header className="flex justify-between items-center p-4 bg-gray-800 text-white">
+      <div className="flex items-center">
+        <Logo />
 
-    return (
-        <>
-            <div className="header">
-                <Logo />
+        {!isLoggedIn ? (
+          // Kullanıcı girişi yokken
+          <div className="ml-8 flex space-x-4">
+            <button className="uppercase text-gray-300" onClick={handleLogin}>
+              Log In
+            </button>
+            <button className="uppercase text-gray-300">Registration</button>
+          </div>
+        ) : (
+          // Kullanıcı girişi varsa
+          <>
+            <div className="hidden lg:flex space-x-4">
+              <button className="uppercase text-gray-300">Diary</button>
+              <button className="uppercase text-gray-300">Calculator</button>
             </div>
-        </>
-    );
+
+            <div className="flex items-center space-x-4">
+              <span className="hidden md:block uppercase">{username}</span>
+              <button
+                className="uppercase text-gray-300"
+                onClick={handleLogout}
+              >
+                Exit
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="lg:hidden flex items-center">
+        <button className="uppercase text-gray-300" onClick={toggleMenu}>
+          {isMenuOpen ? 'Close' : 'Menu'}
+        </button>
+      </div>
+
+      {isMenuOpen && isLoggedIn && (
+        <div className="lg:hidden absolute top-16 right-4 bg-gray-700 text-white p-4 space-y-4">
+          <button className="uppercase text-gray-300">Diary</button>
+          <button className="uppercase text-gray-300">Calculator</button>
+          <button className="uppercase text-gray-300" onClick={handleLogout}>
+            Exit
+          </button>
+        </div>
+      )}
+    </header>
+  );
 };
 
 export default Header;
