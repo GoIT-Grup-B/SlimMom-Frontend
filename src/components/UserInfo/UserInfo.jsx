@@ -9,6 +9,13 @@ const UserInfo = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    const token = useSelector((state) => state.auth.token);
+
+    if (!token) {
+      console.warn('User already logged out, skipping logout request.');
+      return;
+    }
+
     dispatch(logoutUser());
     setIsModalOpen(false);
   };

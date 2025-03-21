@@ -28,34 +28,21 @@ export const loginUser = createAsyncThunk(
         email,
         password,
       });
-      const token = response.data.data.accessToken;
 
-      dispatch(setToken(token));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // Otomatik ekleme
+      // API'den gelen token'ın nerede olduğuna dikkat et!
+      const token = response.data?.data?.accessToken || response.data?.token;
+
+      if (!token) {
+        throw new Error('No token received from API!');
+      }
+
+      dispatch(setToken(token)); // Redux'a kaydediyoruz
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       return response.data;
     } catch (error) {
       console.error('Axios hata yanıtı:', error.response?.data);
       return rejectWithValue(error.response?.data || 'Login failed');
-    }
-  },
-);
-
-export const logoutUser = createAsyncThunk(
-  'auth/logout',
-  async (_, { getState, rejectWithValue }) => {
-    try {
-      const { token } = getState().auth;
-      const response = await axios.post(`${API_URL}/auth/logout`, null, {
-        headers: {
-          Accept: '*/*',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Logout failed');
     }
   },
 );
@@ -75,6 +62,30 @@ export const refreshUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Refresh failed');
+    }
+  },
+);
+
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { getState, rejectWithValue }) => {
+    const token = getState().auth.token; // Redux store'dan token al
+    if (!token) {
+      console.warn('Logout failed: No token found in Redux store!');
+      return rejectWithValue('No token found');
+    }
+
+    try {
+      const response = await axios.post(`${API_URL}/auth/logout`, null, {
+        headers: {
+          Accept: '*/*',
+          Authorization: `Bearer ${token}`, // Tokenı doğru formatta gönderiyoruz
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Logout failed');
     }
   },
 );
