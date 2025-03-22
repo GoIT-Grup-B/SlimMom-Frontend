@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
-import Logo from '../../../public/logo.svg';
+import Logo from '../Logo/Logo';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     setIsLoggedIn(true);
     setUsername('Nic');
+    navigate('/auth/login');
+  };
+
+  const handleRegister = () => {
+    navigate('/auth/register');
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUsername('');
+    navigate('/auth/logout');
   };
 
   const toggleMenu = () => {
@@ -21,17 +29,25 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center p-4 bg-gray-800 text-white">
+    <header className="flex justify-between items-center p-4 border-b-3 border-gray-300">
       <div className="flex items-center">
         <Logo />
 
         {!isLoggedIn ? (
           // Kullanıcı girişi yokken
           <div className="ml-8 flex space-x-4">
-            <button className="uppercase text-gray-300" onClick={handleLogin}>
+            <button
+              className="uppercase text-gray-400 font-bold"
+              onClick={handleLogin}
+            >
               Log In
             </button>
-            <button className="uppercase text-gray-300">Registration</button>
+            <button
+              className="uppercase text-gray-400 font-bold"
+              onClick={handleRegister}
+            >
+              Registration
+            </button>
           </div>
         ) : (
           // Kullanıcı girişi varsa

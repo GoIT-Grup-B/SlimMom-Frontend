@@ -1,20 +1,22 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Logo = () => {
-    const handleClick = () => {
-        window.location.href = '/';
-    };
+  const navigate = useNavigate();
+  const loginState = useSelector((state) => state.auth.isLoggedIn);
+  const handleClick = () => {
+    if (!loginState) {
+      navigate('/');
+    } else {
+      navigate('/diary');
+    }
+  };
 
-    return (
-        <div className="logo" onClick={handleClick} style={{ cursor: 'pointer' }}>
-            <svg
-                width="100"
-                height="100"
-                viewBox="0 0 24 24"
-                ><use href='../../../public/logo.svg'></use>
-            </svg>
-        </div>
-    );
+  return (
+    <div onClick={handleClick} style={{ cursor: 'pointer' }}>
+      <img src="../../../public/logo.svg" />
+    </div>
+  );
 };
 
 export default Logo;

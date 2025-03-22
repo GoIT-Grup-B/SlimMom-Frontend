@@ -7,16 +7,22 @@ import Background from './components/Background/Background';
 import DiaryPage from './pages/DiaryPage/DiaryPage';
 //import AppRoutes from './routers/AppRoutes'
 import UserInfo from './components/UserInfo/UserInfo';
+import Header from './components/Header/Header';
 
 const App = () => {
   return (
     <div>
       <UserInfo />
+      <Header />
       <Background>
-        <RegistirationPage />
-        <LoginPage />
-        <RightSideBar />
-        <DiaryPage />
+        {
+          /* <RegistirationPage />*/
+          <>
+            <LoginPage />
+            <RightSideBar />
+            <DiaryPage />
+          </>
+        }
         <CalculatorCalorieForm />
         <Toaster />
       </Background>
