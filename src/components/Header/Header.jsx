@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import Logo from '../Logo/Logo';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     setIsLoggedIn(true);
     setUsername('Nic');
+    navigate('/auth/login');
+  };
+
+  const handleRegister = () => {
+    navigate('/auth/register');
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUsername('');
+    navigate('/auth/logout');
   };
 
   const toggleMenu = () => {
@@ -34,7 +42,10 @@ const Header = () => {
             >
               Log In
             </button>
-            <button className="uppercase text-gray-400 font-bold">
+            <button
+              className="uppercase text-gray-400 font-bold"
+              onClick={handleRegister}
+            >
               Registration
             </button>
           </div>
