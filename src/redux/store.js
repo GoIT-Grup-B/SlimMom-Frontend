@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './auth/authSlice';
+import loaderReducer from './Loader/loaderSlice';
 
 const authPersistConfig = {
   key: 'auth', // Bu alan sadece auth reducer için kullanılacak
@@ -14,6 +15,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer, // auth reducer persist edilmiş haliyle atanıyor
+    loader: loaderReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

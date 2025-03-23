@@ -3,9 +3,11 @@ import Logo from '../Logo/Logo';
 import UserInfo from '../UserInfo/UserInfo';
 import { NavLink } from 'react-router-dom';
 import { HiMenu, HiX } from 'react-icons/hi';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -23,27 +25,54 @@ const Header = () => {
           <div className="hidden lg:block h-10 border-2 border-gray-300 mx-6"></div>
 
           {/* Desktop için menü linkleri */}
+
           <nav className="hidden lg:flex space-x-6 items-center">
-            <NavLink
-              to="/diary"
-              className={({ isActive }) =>
-                isActive
-                  ? 'uppercase text-black font-bold'
-                  : 'uppercase text-gray-400 font-bold hover:text-black transition'
-              }
-            >
-              Diary
-            </NavLink>
-            <NavLink
-              to="/calculator"
-              className={({ isActive }) =>
-                isActive
-                  ? 'uppercase text-black font-bold'
-                  : 'uppercase text-gray-400 font-bold hover:text-black transition'
-              }
-            >
-              Calculator
-            </NavLink>
+            {isLoggedIn ? (
+              <NavLink
+                to="/diary"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'uppercase text-black font-bold'
+                    : 'uppercase text-gray-400 font-bold hover:text-black transition'
+                }
+              >
+                Diary
+              </NavLink>
+            ) : (
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'uppercase text-black font-bold'
+                    : 'uppercase text-gray-400 font-bold hover:text-black transition'
+                }
+              >
+                Login
+              </NavLink>
+            )}
+            {isLoggedIn ? (
+              <NavLink
+                to="/calculator"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'uppercase text-black font-bold'
+                    : 'uppercase text-gray-400 font-bold hover:text-black transition'
+                }
+              >
+                Calculator
+              </NavLink>
+            ) : (
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'uppercase text-black font-bold'
+                    : 'uppercase text-gray-400 font-bold hover:text-black transition'
+                }
+              >
+                Register
+              </NavLink>
+            )}
           </nav>
         </div>
 
