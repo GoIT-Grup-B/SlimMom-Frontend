@@ -38,16 +38,22 @@ const DiaryPage = () => {
   }, [date, token, navigate]);
 
   return (
-    <div className="flex flex-col md:flex-row m-2.5 p-2.5 gap-4">
-      {/* Sol kısım: Form + Liste */}
-      <div className="flex-1 flex flex-col gap-4">
-        <DiaryAddProductForm date={date} setDate={setDate} />
-        <DiaryProductsList date={date} setDate={setDate} products={products} />
+    <div className="flex justify-between">
+      <div className="m-2.5 p-2.5">
+        {/* Pass a callback to re-fetch or locally update products after adding */}
+        <DiaryAddProductForm
+          date={date}
+          setDate={setDate}
+          onAddSuccess={() => fetchProducts(date)}
+        />
+        <DiaryProductsList
+          products={products}
+          setProducts={setProducts}
+          date={date}
+        />
       </div>
-
-      {/* Sağ kısım: RightSideBar */}
-      <div className="w-full md:w-[300px]">
-        <RightSideBar selectedDate={date} />
+      <div>
+        <RideSideBar />
       </div>
     </div>
   );
