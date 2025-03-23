@@ -9,13 +9,13 @@ const RegistrationPage = lazy(
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 
 const PrivateRoute = ({ children }) => {
-  const token = useSelector((state) => state.user.token);
-  return token ? children : <Navigate to="/login" replace />;
+    const token = useSelector((state) => state.auth.token);
+    return token ? children : <Navigate to="/login" replace />;
 };
 
 const PublicRoute = ({ children }) => {
-  const token = useSelector((state) => state.user.token);
-  return token ? <Navigate to="/" replace /> : children;
+    const token = useSelector((state) => state.auth.token);
+    return token ? <Navigate to="/" replace /> : children;
 };
 
 const AppRoutes = () => {
