@@ -39,9 +39,23 @@ const DiaryPage = () => {
   }, [date, token, navigate]);
 
   return (
-    <div className="m-2.5 p-2.5">
-      <DiaryAddProductForm date={date} setDate={setDate} />
-      <DiaryProductsList date={date} setDate={setDate} />
+    <div className="flex justify-between">
+      <div className="m-2.5 p-2.5">
+        {/* Pass a callback to re-fetch or locally update products after adding */}
+        <DiaryAddProductForm
+          date={date}
+          setDate={setDate}
+          onAddSuccess={() => fetchProducts(date)}
+        />
+        <DiaryProductsList
+          products={products}
+          setProducts={setProducts}
+          date={date}
+        />
+      </div>
+      <div>
+        <RideSideBar />
+      </div>
     </div>
   );
 };
