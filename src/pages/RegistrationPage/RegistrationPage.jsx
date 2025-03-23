@@ -25,7 +25,6 @@ const RegistrationPage = () => {
           Whoops, something went wrong! Please try reloading this page!
         </p>
       )}
-      {!isLoggedIn && <p>Loading register</p>}
       <RegistrationForm />
       <Toaster />
     </>

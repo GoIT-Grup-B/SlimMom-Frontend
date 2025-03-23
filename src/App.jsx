@@ -9,7 +9,6 @@ const App = () => {
   return (
     <>
       <Header />
-      <UserInfo />
       <Background>
         <AppRoutes />
       </Background>

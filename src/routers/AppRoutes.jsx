@@ -15,7 +15,6 @@ const DiaryPage = lazy(() => import('../pages/DiaryPage/DiaryPage'));
 
 const PrivateRoute = ({ children }) => {
   const isLoggedIn = useSelector((state) => {
-    console.log('isLoggedIn:', state.auth.isLoggedIn);
     return state.auth.isLoggedIn;
   });
   return isLoggedIn ? children : <Navigate to="/login" replace />;
@@ -23,7 +22,6 @@ const PrivateRoute = ({ children }) => {
 
 const PublicRoute = ({ children }) => {
   const isLoggedIn = useSelector((state) => {
-    console.log('isLoggedIn:', state.auth.isLoggedIn);
     return state.auth.isLoggedIn;
   });
 
