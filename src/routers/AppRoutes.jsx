@@ -2,12 +2,16 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../components/Loader/Loader';
-import CalculatorPage from '../pages/CalculatorPage/CalculatorPage';
 
 const RegistrationPage = lazy(
   () => import('../pages/RegistrationPage/RegistrationPage'),
 );
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
+const MainPage = lazy(() => import('../pages/MainPage/MainPage'));
+const DiaryPage = lazy(() => import('../pages/DiaryPage/DiaryPage'));
+const CalculatorPage = lazy(
+  () => import('../pages/CalculatorPage/CalculatorPage'),
+);
 
 const PrivateRoute = ({ children }) => {
   const token = useSelector((state) => state.auth.token);
@@ -23,7 +27,14 @@ const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route path="/" element={<CalculatorPage />} />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <MainPage />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/auth/register"
           element={
@@ -38,6 +49,22 @@ const AppRoutes = () => {
             <PublicRoute>
               <LoginPage />
             </PublicRoute>
+          }
+        />
+        <Route
+          path="/diary"
+          element={
+            <PrivateRoute>
+              <DiaryPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/calculator"
+          element={
+            <PrivateRoute>
+              <CalculatorPage />
+            </PrivateRoute>
           }
         />
 
