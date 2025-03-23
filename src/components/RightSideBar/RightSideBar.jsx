@@ -17,7 +17,7 @@ const RightSideBar = ({ selectedDate }) => {
       setStatus('loading');
       try {
         const token = localStorage.getItem('persist:auth')
-          ? JSON.parse(JSON.parse(localStorage.getItem('persist:auth')).token)
+          ? JSON.parse(localStorage.getItem('persist:auth').token)
           : null;
 
         const res = await axios.get(
@@ -36,6 +36,7 @@ const RightSideBar = ({ selectedDate }) => {
           'Daily Info Error:',
           err.response?.data?.message || 'Error',
         );
+        console.log(err);
         setStatus('failed');
         // Ekranda hata göstermiyoruz, konsola yazıyoruz sadece
       }
