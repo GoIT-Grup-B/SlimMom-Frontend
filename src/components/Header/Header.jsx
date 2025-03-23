@@ -95,47 +95,80 @@ const Header = () => {
           </div>
         </div>
       </div>
-
       {/* Mobile için alt satırda user info */}
       <div className="md:hidden mt-2 px-4">
         <UserInfo />
       </div>
-
       {/* Mobil & Tablet için TAM ekran menü */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 bg-[#264061] flex flex-col items-center justify-center space-y-8 text-white text-2xl z-40">
-          <NavLink
-            to="/diary"
-            className={({ isActive }) =>
-              isActive
-                ? 'text-gray-400 uppercase font-bold text-2xl tracking-wide'
-                : 'text-white uppercase font-bold text-2xl tracking-wide hover:opacity-90'
-            }
-            onClick={toggleMenu}
-          >
-            Diary
-          </NavLink>
-          <NavLink
-            to="/calculator"
-            className={({ isActive }) =>
-              isActive
-                ? 'text-white uppercase font-bold text-2xl tracking-wide'
-                : 'text-gray-400 uppercase font-bold text-2xl tracking-wide hover:opacity-90'
-            }
-            onClick={toggleMenu}
-          >
-            Calculator
-          </NavLink>
+      {isLoggedIn
+        ? isMenuOpen && (
+            <div className="fixed inset-0 bg-[#264061] flex flex-col items-center justify-center space-y-8 text-white text-2xl z-40">
+              <NavLink
+                to="/diary"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'text-gray-400 uppercase font-bold text-2xl tracking-wide'
+                    : 'text-white uppercase font-bold text-2xl tracking-wide hover:opacity-90'
+                }
+                onClick={toggleMenu}
+              >
+                Diary
+              </NavLink>
+              <NavLink
+                to="/calculator"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'text-white uppercase font-bold text-2xl tracking-wide'
+                    : 'text-gray-400 uppercase font-bold text-2xl tracking-wide hover:opacity-90'
+                }
+                onClick={toggleMenu}
+              >
+                Calculator
+              </NavLink>
 
-          {/* Menü kapatma butonu */}
-          <button
-            onClick={toggleMenu}
-            className="absolute top-4 right-4 text-white"
-          >
-            <HiX className="w-8 h-8" />
-          </button>
-        </div>
-      )}
+              {/* Menü kapatma butonu */}
+              <button
+                onClick={toggleMenu}
+                className="absolute top-4 right-4 text-white"
+              >
+                <HiX className="w-8 h-8" />
+              </button>
+            </div>
+          )
+        : isMenuOpen && (
+            <div className="fixed inset-0 bg-[#264061] flex flex-col items-center justify-center space-y-8 text-white text-2xl z-40">
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'text-gray-400 uppercase font-bold text-2xl tracking-wide'
+                    : 'text-white uppercase font-bold text-2xl tracking-wide hover:opacity-90'
+                }
+                onClick={toggleMenu}
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'text-white uppercase font-bold text-2xl tracking-wide'
+                    : 'text-gray-400 uppercase font-bold text-2xl tracking-wide hover:opacity-90'
+                }
+                onClick={toggleMenu}
+              >
+                Register
+              </NavLink>
+
+              {/* Menü kapatma butonu */}
+              <button
+                onClick={toggleMenu}
+                className="absolute top-4 right-4 text-white"
+              >
+                <HiX className="w-8 h-8" />
+              </button>
+            </div>
+          )}
     </header>
   );
 };
