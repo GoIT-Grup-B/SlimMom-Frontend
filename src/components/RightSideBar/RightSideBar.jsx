@@ -82,7 +82,7 @@ const RightSideBar = ({ selectedDate }) => {
   }, [selectedDate]);
 
   return (
-    <aside className="flex flex-col gap-8 w-full md:w-[300px] p-4 bg-gray-50 rounded-lg shadow-md">
+    <aside className="bg-gray-100 relative max-w-[width] min-h-screen flex flex-col gap-8 w-full md:w-[300px] p-4 bg-gray-50 rounded-lg shadow-md">
       {/* Summary */}
       <div>
         <h3 className="font-verdana font-bold text-sm mb-4 tracking-wider">
