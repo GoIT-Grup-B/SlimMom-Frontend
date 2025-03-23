@@ -3,12 +3,14 @@ import addVector from '../../assets/svg/add.svg';
 import calendar from '../../assets/svg/calendar.svg';
 import axios from 'axios';
 import { DiaryDateСalendar } from '../DiaryDateСalendar/DiaryDateСalendar';
+import toast from 'react-hot-toast';
 
 const DiaryAddProductForm = ({ date, setDate }) => {
   const [query, setQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [weight, setWeight] = useState('');
   const [itemId, setItemId] = useState('');
+  const [selectedTitle, setSelectedTitle] = useState('');
 
   function deleteList() {
     setFilteredItems([]);
@@ -24,6 +26,8 @@ const DiaryAddProductForm = ({ date, setDate }) => {
           date: date,
         },
       );
+    } else {
+      toast.error('You need to choose both item and the grams');
     }
   }
 
@@ -47,39 +51,47 @@ const DiaryAddProductForm = ({ date, setDate }) => {
         <DiaryDateСalendar date={date} setDate={setDate} />
         <img src={calendar} width={20} height={20} />
       </div>
-      <form className="flex flex-col items-center gap-5">
+      <form className="flex flex-col items-center">
         <input
           type="search"
           name="query"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={selectedTitle}
+          onChange={(e) => {
+            setSelectedTitle(e.target.value);
+            setQuery(e.target.value);
+          }}
           placeholder="Enter product name"
-          className="border-b-2 border-b-gray-200 w-full placeholder:font-bold placeholder:text-gray-400 pb-1"
+          className="border-b-2 border-gray-200 w-full active:border-gray-400 placeholder:font-bold placeholder:text-gray-400 pb-1 mb-5"
         />
+        {filteredItems.length > 0 ? (
+          <ul className="flex flex-col border-l-2 border-r-2 border-b-2 border-gray-400">
+            {filteredItems.map((item) => (
+              <li
+                key={item._id}
+                className="cursor-pointer hover:bg-gray-200 not-last:border-b-2 border-gray-400 p-0.5"
+                onClick={() => {
+                  setSelectedTitle(item.title);
+                  setItemId(item._id);
+                  deleteList();
+                }}
+              >
+                {item.title}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          ''
+        )}
         <input
           type="number"
           placeholder="Grams"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
-          className="border-b-2 border-b-gray-200 w-full placeholder:font-bold placeholder:text-gray-400 pb-1"
+          className="border-b-2 border-b-gray-200 w-full placeholder:font-bold placeholder:text-gray-400 pb-1 mb-5"
         />
-        <ul className="flex flex-col">
-          {filteredItems.map((item) => (
-            <li
-              key={item._id}
-              className="cursor-pointer hover:bg-gray-200"
-              onClick={() => {
-                setQuery(item.title);
-                setItemId(item._id);
-                deleteList();
-              }}
-            >
-              {item.title}
-            </li>
-          ))}
-        </ul>
+
         <button
-          className="bg-[#FC842D] rounded-full cursor-pointer w-12 h-12 drop-shadow-2xl justify-items-center mb-10"
+          className="bg-[#FC842D] rounded-full cursor-pointer w-12 h-12 shadow-[0_4px_10px_rgba(252,132,45,0.5)] justify-items-center mb-10"
           onClick={(e) => {
             e.preventDefault();
             addProduct(itemId);

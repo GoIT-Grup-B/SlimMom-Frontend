@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchDailyRate,
-  fetchDailyCalories,
-} from '../../redux/dailySummary/dailySummaryOps';
+import { fetchUserDailyNeeds } from '../../redux/dailySummary/dailySummaryOps';
 
 const RightSideBar = ({ selectedDate }) => {
   const dispatch = useDispatch();
 
-  // Redux state
   const {
     dailyRate,
     notAllowedFoods,
@@ -18,22 +14,16 @@ const RightSideBar = ({ selectedDate }) => {
     error,
   } = useSelector((state) => state.dailySummary);
 
-  // Login olmuş kullanıcıdan token al
   const token = useSelector((state) => state.auth.token);
 
-  // useEffect → tarih değişince kalori verisini çek
   useEffect(() => {
-    if (token && selectedDate) {
-      dispatch(fetchDailyCalories(selectedDate));
+    if (token) {
+      dispatch(fetchUserDailyNeeds());
     }
-  }, [dispatch, token, selectedDate]);
-
-  // Bilgiler calculator'dan gelince fetchDailyRate çağırılacak
-  // dispatch(fetchDailyRate(userData)); // Start Losing Weight butonunda çağırılır
+  }, [dispatch, token]);
 
   return (
     <aside className="flex flex-col gap-8 w-full md:w-[300px] p-4 bg-gray-50 rounded-lg shadow-md">
-      {/* Summary */}
       <div>
         <h3 className="font-verdana font-bold text-sm mb-4 tracking-wider">
           Summary for {selectedDate}
@@ -57,18 +47,17 @@ const RightSideBar = ({ selectedDate }) => {
               <span>{dailyRate ?? 0} kcal</span>
             </li>
             <li className="flex justify-between">
-               <span>n% of normal</span>
-               <span>
-                 {dailyRate
+              <span>n% of normal</span>
+              <span>
+                {dailyRate
                   ? `${Math.round((consumedCalories / dailyRate) * 100)}%`
                   : '0%'}
-                 </span>
+              </span>
             </li>
           </ul>
         )}
       </div>
 
-      {/* Not Recommended Foods */}
       <div>
         <h3 className="text-md font-bold mb-3">Food not recommended</h3>
         {notAllowedFoods?.length > 0 ? (

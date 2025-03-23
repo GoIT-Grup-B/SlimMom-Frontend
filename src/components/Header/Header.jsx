@@ -1,71 +1,109 @@
 import React, { useState } from 'react';
-import Logo from '../../../public/logo.svg';
+import Logo from '../Logo/Logo';
+import UserInfo from '../UserInfo/UserInfo';
+import { NavLink } from 'react-router-dom';
+import { HiMenu, HiX } from 'react-icons/hi';
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    setUsername('Nic');
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUsername('');
-  };
-
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prev) => !prev);
   };
 
   return (
-    <header className="flex justify-between items-center p-4 bg-gray-800 text-white">
-      <div className="flex items-center">
-        <Logo />
+    <header className="w-full border-b border-gray-200 px-4 py-12 md:px-6 relative z-50 bg-white">
+      {/* ÜST SATIR */}
+      <div className="flex justify-between items-center">
+        {/* Sol: Logo + Menü */}
+        <div className="flex items-center">
+          <Logo />
 
-        {!isLoggedIn ? (
-          // Kullanıcı girişi yokken
-          <div className="ml-8 flex space-x-4">
-            <button className="uppercase text-gray-300" onClick={handleLogin}>
-              Log In
-            </button>
-            <button className="uppercase text-gray-300">Registration</button>
+          {/* Dikey çizgi */}
+          <div className="hidden lg:block h-10 border-2 border-gray-300 mx-6"></div>
+
+          {/* Desktop için menü linkleri */}
+          <nav className="hidden lg:flex space-x-6 items-center">
+            <NavLink
+              to="/diary"
+              className={({ isActive }) =>
+                isActive
+                  ? 'uppercase text-black font-bold'
+                  : 'uppercase text-gray-400 font-bold hover:text-black transition'
+              }
+            >
+              Diary
+            </NavLink>
+            <NavLink
+              to="/calculator"
+              className={({ isActive }) =>
+                isActive
+                  ? 'uppercase text-black font-bold'
+                  : 'uppercase text-gray-400 font-bold hover:text-black transition'
+              }
+            >
+              Calculator
+            </NavLink>
+          </nav>
+        </div>
+
+        {/* Sağ: User info ve hamburger */}
+        <div className="flex items-center space-x-4">
+          {/* Tablet ve üstü için UserInfo */}
+          <div className="hidden md:flex">
+            <UserInfo />
           </div>
-        ) : (
-          // Kullanıcı girişi varsa
-          <>
-            <div className="hidden lg:flex space-x-4">
-              <button className="uppercase text-gray-300">Diary</button>
-              <button className="uppercase text-gray-300">Calculator</button>
-            </div>
 
-            <div className="flex items-center space-x-4">
-              <span className="hidden md:block uppercase">{username}</span>
-              <button
-                className="uppercase text-gray-300"
-                onClick={handleLogout}
-              >
-                Exit
-              </button>
-            </div>
-          </>
-        )}
+          {/* Sadece mobil ve tablet için hamburger */}
+          <div className="lg:hidden">
+            <button onClick={toggleMenu} aria-label="Toggle Menu">
+              {isMenuOpen ? (
+                <HiX className="w-6 h-6 text-gray-700" />
+              ) : (
+                <HiMenu className="w-6 h-6 text-gray-700" />
+              )}
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="lg:hidden flex items-center">
-        <button className="uppercase text-gray-300" onClick={toggleMenu}>
-          {isMenuOpen ? 'Close' : 'Menu'}
-        </button>
+      {/* Mobile için alt satırda user info */}
+      <div className="md:hidden mt-2 px-4">
+        <UserInfo />
       </div>
 
-      {isMenuOpen && isLoggedIn && (
-        <div className="lg:hidden absolute top-16 right-4 bg-gray-700 text-white p-4 space-y-4">
-          <button className="uppercase text-gray-300">Diary</button>
-          <button className="uppercase text-gray-300">Calculator</button>
-          <button className="uppercase text-gray-300" onClick={handleLogout}>
-            Exit
+      {/* Mobil & Tablet için TAM ekran menü */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 bg-[#264061] flex flex-col items-center justify-center space-y-8 text-white text-2xl z-40">
+          <NavLink
+            to="/diary"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-gray-400 uppercase font-bold text-2xl tracking-wide'
+                : 'text-white uppercase font-bold text-2xl tracking-wide hover:opacity-90'
+            }
+            onClick={toggleMenu}
+          >
+            Diary
+          </NavLink>
+          <NavLink
+            to="/calculator"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-white uppercase font-bold text-2xl tracking-wide'
+                : 'text-gray-400 uppercase font-bold text-2xl tracking-wide hover:opacity-90'
+            }
+            onClick={toggleMenu}
+          >
+            Calculator
+          </NavLink>
+
+          {/* Menü kapatma butonu */}
+          <button
+            onClick={toggleMenu}
+            className="absolute top-4 right-4 text-white"
+          >
+            <HiX className="w-8 h-8" />
           </button>
         </div>
       )}
@@ -74,3 +112,5 @@ const Header = () => {
 };
 
 export default Header;
+
+////

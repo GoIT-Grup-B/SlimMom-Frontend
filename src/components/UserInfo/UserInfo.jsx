@@ -1,3 +1,5 @@
+//////
+
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../redux/auth/authOps';
@@ -9,20 +11,40 @@ const UserInfo = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    const token = useSelector((state) => state.auth.token);
+
+    if (!token) {
+      console.warn('User already logged out, skipping logout request.');
+      return;
+    }
+
     dispatch(logoutUser());
     setIsModalOpen(false);
   };
 
   return (
-    <div className="flex items-center space-x-4">
-      <span className="font-semibold text-gray-700">{username}</span>
+    <div className="flex items-center text-sm w-full">
+      {/* Username */}
+      <span
+        className="font-bold text-[14px] leading-[1] tracking-[0.04em] text-black"
+        style={{ fontFamily: 'Verdana, sans-serif' }}
+      >
+        {username}
+      </span>
+
+      {/* Ayraç */}
+      <span className="mx-2 h-10 border-2 border-gray-300"></span>
+
+      {/* Exit */}
       <button
         onClick={() => setIsModalOpen(true)}
-        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 transition"
+        className="font-bold text-[14px] leading-[1] tracking-[0.04em] text-[#9B9FAA] hover:text-gray-600 transition"
+        style={{ fontFamily: 'Verdana, sans-serif' }}
       >
         Exit
       </button>
 
+      {/* Modal */}
       {isModalOpen && (
         <LogoutModal
           onClose={() => setIsModalOpen(false)}

@@ -4,11 +4,9 @@ import { useSelector } from 'react-redux';
 import Loader from '../components/Loader/Loader';
 
 const RegistrationPage = lazy(
-    () => import('../pages/RegistrationPage/RegistrationPage'),
+  () => import('../pages/RegistrationPage/RegistrationPage'),
 );
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
-
-
 
 const PrivateRoute = ({ children }) => {
     const token = useSelector((state) => state.auth.token);
@@ -21,35 +19,30 @@ const PublicRoute = ({ children }) => {
 };
 
 const AppRoutes = () => {
-    return (
-        <Suspense fallback={<Loader />}>
-            <Routes>
-                <Route
-                    path="/auth/register"
-                    element={
-                        <PublicRoute>
-                            <RegistrationPage />
-                        </PublicRoute>
-                    }
-                />
-                <Route
-                    path="/auth/login"
-                    element={
-                        <PublicRoute>
-                            <LoginPage />
-                        </PublicRoute>
-                    }
-                />
-                <Route>
-                    <PrivateRoute>
-                        <Header/>
-                    </PrivateRoute>
-                </Route>
- 
-                <Route path="*" element={<Navigate to="/login" replace />} />
-            </Routes>
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route
+          path="/auth/register"
+          element={
+            <PublicRoute>
+              <RegistrationPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/auth/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Suspense>
+  );
 };
 
 export default AppRoutes;
