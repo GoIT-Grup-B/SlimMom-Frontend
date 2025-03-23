@@ -11,13 +11,20 @@ const RegistrationPage = lazy(
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 
 const PrivateRoute = ({ children }) => {
-  const token = useSelector((state) => state.auth.token);
-  return token ? children : <Navigate to="/login" replace />;
+  const isLoggedIn = useSelector((state) => {
+    console.log('isLoggedIn:', state.auth.isLoggedIn);
+    return state.auth.isLoggedIn;
+  });
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
 };
 
 const PublicRoute = ({ children }) => {
-    const token = useSelector((state) => state.auth.token);
-    return token ? <Navigate to="/diary" replace /> : children;
+  const isLoggedIn = useSelector((state) => {
+    console.log('isLoggedIn:', state.auth.isLoggedIn);
+    return state.auth.isLoggedIn;
+  });
+
+  return isLoggedIn ? <Navigate to="/diary" replace /> : children;
 };
 
 const AppRoutes = () => {
