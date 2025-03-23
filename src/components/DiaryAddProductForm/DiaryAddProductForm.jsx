@@ -52,7 +52,7 @@ const DiaryAddProductForm = ({ date, setDate }) => {
         <img src={calendar} width={15} height={15} />
       </div>
       <form className="flex flex-col items-center md:flex-row md:items-baseline md:justify-start md:gap-10">
-        <div className="md:flex md:flex-col">
+        <div className="md:flex md:flex-col w-full md:max-w-[240px] mb-5">
           <input
             type="search"
             name="query"
@@ -62,7 +62,7 @@ const DiaryAddProductForm = ({ date, setDate }) => {
               setQuery(e.target.value);
             }}
             placeholder="Enter product name"
-            className="border-b-2 border-gray-200 w-full active:border-gray-400 focus:border-gray-400 placeholder:font-bold placeholder:text-gray-400 pb-1 md:pb-4 md:min-w-[240px]"
+            className="border-b-2 border-gray-200 w-full active:border-gray-400 focus:border-gray-400 placeholder:font-bold placeholder:text-gray-400 pb-1 md:pb-4 md:w-[240px]"
           />
           {filteredItems.length > 0 ? (
             <ul className="flex flex-col border-l-2 border-r-2 border-b-2 border-gray-400">
