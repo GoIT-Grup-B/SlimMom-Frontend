@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DiaryProductsListItem } from '../DiaryProductsListItem/DiaryProductsListItem';
 import axios from 'axios';
+import "./scrollbar.css"
 
 export const DiaryProductsList = ({ date }) => {
   const [products, setProducts] = useState([]);
@@ -26,7 +27,7 @@ export const DiaryProductsList = ({ date }) => {
   return (
     <>
       {
-        <ul>
+              <ul className="my-scrollbar flex flex-col max-h-[300px] overflow-y-scroll xl:mt-10 xl:max-h-[400px] xl:max-w-fit xl:pr-5">
           {products.map((product) => (
             <DiaryProductsListItem
               key={product._id}

@@ -8,7 +8,7 @@ export const DiaryDateСalendar = ({ date, setDate }) => {
       dateFormat="dd.MM.yyyy"
       selected={date}
       onChange={(date) => setDate(date)}
-      className="text-xl font-bold w-[116px] h-[20px]"
+      className="text-xl font-bold w-[116px] h-[20px] ml-21"
     />
   );
 };
