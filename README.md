@@ -1,1 +1,1 @@
-# SlimMom-Frontend
+# Slim Mom Grup-B
