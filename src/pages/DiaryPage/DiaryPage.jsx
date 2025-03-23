@@ -53,7 +53,7 @@ const DiaryPage = () => {
         />
       </div>
       <div>
-        <RideSideBar />
+        <RightSideBar />
       </div>
     </div>
   );
