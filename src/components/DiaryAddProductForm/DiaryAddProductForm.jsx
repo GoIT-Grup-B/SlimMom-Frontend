@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import addVector from '../../assets/svg/add.svg';
-import calendar from '../../assets/svg/calendar.svg';
+import addVector from '/svg/add.svg';
+import calendar from '/svg/calendar.svg';
 import axios from 'axios';
 import { DiaryDateСalendar } from '../DiaryDateСalendar/DiaryDateСalendar';
 import toast from 'react-hot-toast';
@@ -34,7 +34,7 @@ const DiaryAddProductForm = ({ date, setDate, onAddSuccess }) => {
         setItemId('');
         setWeight('');
       } catch (err) {
-        toast.error('Failed to add product');
+        toast.error('Failed to add product', err);
       }
     } else {
       toast.error('You need to choose both item and the grams');
