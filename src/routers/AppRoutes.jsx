@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../components/Loader/Loader';
 import CalculatorPage from '../pages/CalculatorPage/CalculatorPage';
+import DiaryPage from '../pages/DiaryPage/DiaryPage';
 
 const RegistrationPage = lazy(
   () => import('../pages/RegistrationPage/RegistrationPage'),
@@ -15,15 +16,15 @@ const PrivateRoute = ({ children }) => {
 };
 
 const PublicRoute = ({ children }) => {
-  const token = useSelector((state) => state.auth.token);
-  return token ? <Navigate to="/" replace /> : children;
+    const token = useSelector((state) => state.auth.token);
+    return token ? <Navigate to="/diary" replace /> : children;
 };
 
 const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route path="/" element={<CalculatorPage />} />
+        {/* <Route path="/" element={<CalculatorPage />} /> */}
         <Route
           path="/auth/register"
           element={
@@ -38,6 +39,14 @@ const AppRoutes = () => {
             <PublicRoute>
               <LoginPage />
             </PublicRoute>
+          }
+        />
+        <Route
+          path="/diary"
+          element={
+            <PrivateRoute>
+              <DiaryPage />
+            </PrivateRoute>
           }
         />
 

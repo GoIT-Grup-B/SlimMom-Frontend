@@ -8,26 +8,12 @@ import DiaryPage from './pages/DiaryPage/DiaryPage';
 import AppRoutes from './routers/AppRoutes';
 import UserInfo from './components/UserInfo/UserInfo';
 import Header from './components/Header/Header';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const App = () => {
-  return (
-    <div>
-      <Header />
-      <Background>
-        {
-          /* <RegistirationPage />*/
-          <>
-            <LoginPage />
-            <RightSideBar />
-            <DiaryPage />
-          </>
-        }
-        <CalculatorCalorieForm />
-
-        <Toaster />
-      </Background>
-    </div>
-  );
+    return (
+        <AppRoutes />
+    );
 };
 
 export default App;
