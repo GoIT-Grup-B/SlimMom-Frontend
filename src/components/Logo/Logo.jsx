@@ -14,7 +14,7 @@ const Logo = () => {
 
   return (
     <div onClick={handleClick} style={{ cursor: 'pointer' }}>
-      <img src="../../../public/logo.svg" />
+      <img src="../../../../logo.svg" />
     </div>
   );
 };

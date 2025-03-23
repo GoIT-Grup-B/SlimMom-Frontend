@@ -1,7 +1,5 @@
-// redux/dailySummary/dailySummarySlice.js
-
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchDailyRate, fetchDailyCalories } from './dailySummaryOps';
+import { fetchUserDailyNeeds } from './dailySummaryOps';
 
 const initialState = {
   dailyRate: 0,
@@ -18,31 +16,18 @@ const dailySummarySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // fetchDailyRate için
-      .addCase(fetchDailyRate.pending, (state) => {
+      .addCase(fetchUserDailyNeeds.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchDailyRate.fulfilled, (state, action) => {
+      .addCase(fetchUserDailyNeeds.fulfilled, (state, action) => {
         state.loading = false;
-        state.dailyRate = action.payload.dailyRate;
-        state.notAllowedFoods = action.payload.notAllowedFoods;
+        if (action.payload) {
+          state.dailyRate = action.payload.dailyRate;
+          state.notAllowedFoods = action.payload.notAllowedFoods;
+        }
       })
-      .addCase(fetchDailyRate.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      // fetchDailyCalories için
-      .addCase(fetchDailyCalories.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchDailyCalories.fulfilled, (state, action) => {
-        state.loading = false;
-        state.consumedCalories = action.payload.consumedCalories;
-        state.leftCalories = action.payload.leftCalories;
-      })
-      .addCase(fetchDailyCalories.rejected, (state, action) => {
+      .addCase(fetchUserDailyNeeds.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
