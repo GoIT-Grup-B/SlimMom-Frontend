@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './auth/authSlice';
-import dailySummaryReducer from './dailySummary/dailySummarySlice'; // En üste import et
 
 const authPersistConfig = {
   key: 'auth', // Bu alan sadece auth reducer için kullanılacak
@@ -15,7 +14,6 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer, // auth reducer persist edilmiş haliyle atanıyor
-    dailySummary: dailySummaryReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
