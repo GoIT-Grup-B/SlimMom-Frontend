@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../components/Loader/Loader';
+import CalculatorPage from '../pages/CalculatorPage/CalculatorPage';
 
 const RegistrationPage = lazy(
   () => import('../pages/RegistrationPage/RegistrationPage'),
@@ -9,19 +10,20 @@ const RegistrationPage = lazy(
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 
 const PrivateRoute = ({ children }) => {
-    const token = useSelector((state) => state.auth.token);
-    return token ? children : <Navigate to="/login" replace />;
+  const token = useSelector((state) => state.auth.token);
+  return token ? children : <Navigate to="/login" replace />;
 };
 
 const PublicRoute = ({ children }) => {
-    const token = useSelector((state) => state.auth.token);
-    return token ? <Navigate to="/" replace /> : children;
+  const token = useSelector((state) => state.auth.token);
+  return token ? <Navigate to="/" replace /> : children;
 };
 
 const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
+        <Route path="/" element={<CalculatorPage />} />
         <Route
           path="/auth/register"
           element={
@@ -31,7 +33,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="/auth/login"
+          path="/login"
           element={
             <PublicRoute>
               <LoginPage />

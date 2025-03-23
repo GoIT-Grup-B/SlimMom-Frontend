@@ -25,7 +25,7 @@ function DailyCaloryModal({ setDailyRate, dailyRate }) {
     <div
       id="modal-overlay"
       onClick={(e) => handleOutsideClick(e)}
-      className="fixed w-full h-full bg-white md:bg-gray-500/50 flex items-center justify-center"
+      className="fixed top-0  z-60 w-full h-full bg-white md:bg-gray-500/50 flex items-center justify-center"
     >
       <div className="py-[40px] px-[20px] bg-white  items-center justify-center  ">
         <div className="flex flex-col gap-[40px] md:py-[64px] md:px-[82px] md:max-w-[608px] relative ">

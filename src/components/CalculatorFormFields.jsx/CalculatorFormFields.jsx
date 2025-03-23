@@ -19,6 +19,20 @@ function CalculatorFormFields({ values }) {
 
       <div className="flex">
         <Field
+          name="currentWeight"
+          type="number"
+          placeholder="Current weight *"
+          className="w-full border-b border-gray-200 pl-1 pb-2 focus:outline-none focus:border-gray-600 focus:placeholder-gray-600"
+        />
+        <ErrorMessage
+          name="currentWeight"
+          component="span"
+          className="text-red-500 text-xs"
+        />
+      </div>
+
+      <div className="flex">
+        <Field
           name="desiredWeight"
           type="number"
           placeholder="Desired weight *"
@@ -40,19 +54,6 @@ function CalculatorFormFields({ values }) {
         />
         <ErrorMessage
           name="age"
-          component="span"
-          className="text-red-500 text-xs"
-        />
-      </div>
-      <div className="flex">
-        <Field
-          name="currentWeight"
-          type="number"
-          placeholder="Current weight *"
-          className="w-full border-b border-gray-200 pl-1 pb-2 focus:outline-none focus:border-gray-600 focus:placeholder-gray-600"
-        />
-        <ErrorMessage
-          name="currentWeight"
           component="span"
           className="text-red-500 text-xs"
         />
