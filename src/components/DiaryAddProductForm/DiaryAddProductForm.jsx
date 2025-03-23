@@ -5,7 +5,7 @@ import axios from 'axios';
 import { DiaryDateСalendar } from '../DiaryDateСalendar/DiaryDateСalendar';
 import toast from 'react-hot-toast';
 
-const DiaryAddProductForm = ({ date, setDate }) => {
+const DiaryAddProductForm = ({ date, setDate, onAddSuccess }) => {
   const [query, setQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [weight, setWeight] = useState('');
@@ -16,16 +16,26 @@ const DiaryAddProductForm = ({ date, setDate }) => {
     setFilteredItems([]);
   }
 
-  async function addProduct(itemId) {
+  async function addProduct() {
     if (itemId && weight) {
-      await axios.post(
-        'https://slimmom-backend-s8n8.onrender.com/user/products',
-        {
-          productId: itemId,
-          productWeight: weight,
-          date: date,
-        },
-      );
+      try {
+        await axios.post(
+          'https://slimmom-backend-s8n8.onrender.com/user/products',
+          {
+            productId: itemId,
+            productWeight: weight,
+            date,
+          },
+        );
+        // Trigger re-fetch in DiaryPage, so the new item appears right away
+        onAddSuccess && onAddSuccess();
+        // Reset fields
+        setSelectedTitle('');
+        setItemId('');
+        setWeight('');
+      } catch (err) {
+        toast.error('Failed to add product');
+      }
     } else {
       toast.error('You need to choose both item and the grams');
     }
@@ -51,11 +61,13 @@ const DiaryAddProductForm = ({ date, setDate }) => {
         <DiaryDateСalendar date={date} setDate={setDate} />
         <img src={calendar} width={15} height={15} />
       </div>
-      <form className="flex flex-col items-center md:flex-row md:items-baseline md:justify-start md:gap-10">
+      <form
+        className="flex flex-col items-center md:flex-row md:items-baseline md:justify-start md:gap-10"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <div className="md:flex md:flex-col w-full md:max-w-[240px] mb-5">
           <input
             type="search"
-            name="query"
             value={selectedTitle}
             onChange={(e) => {
               setSelectedTitle(e.target.value);
@@ -64,7 +76,7 @@ const DiaryAddProductForm = ({ date, setDate }) => {
             placeholder="Enter product name"
             className="border-b-2 border-gray-200 w-full active:border-gray-400 focus:border-gray-400 placeholder:font-bold placeholder:text-gray-400 pb-1 md:pb-4 md:w-[240px]"
           />
-          {filteredItems.length > 0 ? (
+          {filteredItems.length > 0 && (
             <ul className="flex flex-col border-l-2 border-r-2 border-b-2 border-gray-400">
               {filteredItems.map((item) => (
                 <li
@@ -80,8 +92,6 @@ const DiaryAddProductForm = ({ date, setDate }) => {
                 </li>
               ))}
             </ul>
-          ) : (
-            ''
           )}
         </div>
         <input
@@ -93,11 +103,9 @@ const DiaryAddProductForm = ({ date, setDate }) => {
         />
 
         <button
+          type="button"
           className="bg-[#FC842D] rounded-full cursor-pointer w-12 h-12 shadow-[0_4px_10px_rgba(252,132,45,0.5)] justify-items-center mb-10 md:mb-0 md:self-start"
-          onClick={(e) => {
-            e.preventDefault();
-            addProduct(itemId);
-          }}
+          onClick={addProduct}
         >
           <img src={addVector} className="w-5 h-5" />
         </button>
