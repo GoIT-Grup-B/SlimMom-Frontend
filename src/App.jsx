@@ -11,29 +11,9 @@ import Header from './components/Header/Header';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const App = () => {
-<<<<<<< HEAD
-  return (
-    <div>
-      <Header />
-      <Background>
-        {
-          /* <RegistirationPage />*/
-          <>
-            <LoginPage />
-
-            <DiaryPage />
-          </>
-        }
-        <CalculatorCalorieForm />
-        <Toaster />
-      </Background>
-    </div>
-  );
-=======
     return (
         <AppRoutes />
     );
->>>>>>> 92df1780845d7bc17c651490a6b2ed2686640714
 };
 
 export default App;
