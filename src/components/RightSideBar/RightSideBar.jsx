@@ -17,19 +17,26 @@ const RightSideBar = ({ selectedDate }) => {
       setStatus('loading');
       try {
         const token = localStorage.getItem('persist:auth')
-          ? JSON.parse(JSON.parse(localStorage.getItem('persist:auth')).token)
+          ? JSON.parse(localStorage.getItem('persist:auth').token)
           : null;
 
-        const res = await axios.get('https://slimmom-backend-s8n8.onrender.com/user/my-daily-calory-needs', {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const res = await axios.get(
+          'https://slimmom-backend-s8n8.onrender.com/user/my-daily-calory-needs',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
         setDailyRate(res.data.data.dailyRate);
         setNotAllowedFoods(res.data.data.notAllowedFoods);
         setStatus('succeeded');
       } catch (err) {
-        console.log('Daily Info Error:', err.response?.data?.message || 'Error');
+        console.log(
+          'Daily Info Error:',
+          err.response?.data?.message || 'Error',
+        );
+        console.log(err);
         setStatus('failed');
         // Ekranda hata göstermiyoruz, konsola yazıyoruz sadece
       }
@@ -56,12 +63,15 @@ const RightSideBar = ({ selectedDate }) => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
         setConsumedCalories(res.data.dailyCalories);
         setFetchedDate(res.data.date); // API'den dönen tarih
       } catch (err) {
-        console.log('Daily Calories Error:', err.response?.data?.message || 'Error');
+        console.log(
+          'Daily Calories Error:',
+          err.response?.data?.message || 'Error',
+        );
         // hata olsa bile 0 kalori yazdırıyoruz
       }
     };
@@ -76,7 +86,9 @@ const RightSideBar = ({ selectedDate }) => {
       {/* Summary */}
       <div>
         <h3 className="font-verdana font-bold text-sm mb-4 tracking-wider">
-          Summary for {fetchedDate || (selectedDate ? format(selectedDate, 'dd.MM.yyyy') : '')}
+          Summary for{' '}
+          {fetchedDate ||
+            (selectedDate ? format(selectedDate, 'dd.MM.yyyy') : '')}
         </h3>
         {status === 'loading' ? (
           <p>Loading...</p>

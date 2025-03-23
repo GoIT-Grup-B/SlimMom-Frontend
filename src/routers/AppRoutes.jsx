@@ -2,31 +2,46 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../components/Loader/Loader';
-import CalculatorPage from '../pages/CalculatorPage/CalculatorPage';
-import DiaryPage from '../pages/DiaryPage/DiaryPage';
 
 const RegistrationPage = lazy(
   () => import('../pages/RegistrationPage/RegistrationPage'),
 );
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
+const MainPage = lazy(() => import('../pages/MainPage/MainPage'));
+const CalculatorPage = lazy(
+  () => import('../pages/CalculatorPage/CalculatorPage'),
+);
+const DiaryPage = lazy(() => import('../pages/DiaryPage/DiaryPage'));
 
 const PrivateRoute = ({ children }) => {
-  const token = useSelector((state) => state.auth.token);
-  return token ? children : <Navigate to="/login" replace />;
+  const isLoggedIn = useSelector((state) => {
+    return state.auth.isLoggedIn;
+  });
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
 };
 
 const PublicRoute = ({ children }) => {
-    const token = useSelector((state) => state.auth.token);
-    return token ? <Navigate to="/diary" replace /> : children;
+  const isLoggedIn = useSelector((state) => {
+    return state.auth.isLoggedIn;
+  });
+
+  return isLoggedIn ? <Navigate to="/diary" replace /> : children;
 };
 
 const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        {/* <Route path="/" element={<CalculatorPage />} /> */}
         <Route
-          path="/auth/register"
+          path="/"
+          element={
+            <PublicRoute>
+              <MainPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
           element={
             <PublicRoute>
               <RegistrationPage />
@@ -46,6 +61,14 @@ const AppRoutes = () => {
           element={
             <PrivateRoute>
               <DiaryPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/calculator"
+          element={
+            <PrivateRoute>
+              <CalculatorPage />
             </PrivateRoute>
           }
         />
