@@ -36,9 +36,7 @@ const RightSideBar = ({ selectedDate }) => {
           'Daily Info Error:',
           err.response?.data?.message || 'Error',
         );
-        console.log(err);
         setStatus('failed');
-        // Ekranda hata göstermiyoruz, konsola yazıyoruz sadece
       }
     };
 
@@ -66,13 +64,12 @@ const RightSideBar = ({ selectedDate }) => {
           },
         );
         setConsumedCalories(res.data.dailyCalories);
-        setFetchedDate(res.data.date); // API'den dönen tarih
+        setFetchedDate(res.data.date);
       } catch (err) {
         console.log(
           'Daily Calories Error:',
           err.response?.data?.message || 'Error',
         );
-        // hata olsa bile 0 kalori yazdırıyoruz
       }
     };
 
@@ -82,10 +79,29 @@ const RightSideBar = ({ selectedDate }) => {
   }, [selectedDate]);
 
   return (
-    <aside className="bg-gray-100 relative max-w-[width] min-h-screen flex flex-col gap-8 w-full md:w-[300px] p-4 bg-gray-50 rounded-lg shadow-md">
+    <aside
+      className="
+        relative
+        flex flex-col 
+        items-center 
+        justify-center 
+        gap-8
+        w-full
+        md:w-[600px]
+        min-h-screen
+        p-6
+        bg-gray-50
+        rounded-lg
+        shadow-md
+        md:bg-[url('/Layer-4-yapraklar.png')]
+        bg-no-repeat
+        md:bg-[position:calc(600px_-_540px)_top]
+        md:bg-[length:auto_100%]
+      "
+    >
       {/* Summary */}
-      <div>
-        <h3 className="font-verdana font-bold text-sm mb-4 tracking-wider">
+      <div className="flex flex-col items-center gap-4 mb-8">
+        <h3 className="font-verdana font-bold text-sm tracking-wider">
           Summary for{' '}
           {fetchedDate ||
             (selectedDate ? format(selectedDate, 'dd.MM.yyyy') : '')}
@@ -93,20 +109,20 @@ const RightSideBar = ({ selectedDate }) => {
         {status === 'loading' ? (
           <p>Loading...</p>
         ) : (
-          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] leading-[14px] tracking-[0.04em] space-y-2">
-            <li className="flex justify-between">
+          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] leading-[18px] tracking-[0.04em] space-y-4">
+            <li className="flex justify-between gap-4">
               <span>Left</span>
               <span>{leftCalories >= 0 ? leftCalories : 0} kcal</span>
             </li>
-            <li className="flex justify-between">
+            <li className="flex justify-between gap-4">
               <span>Consumed</span>
               <span>{consumedCalories ?? 0} kcal</span>
             </li>
-            <li className="flex justify-between">
+            <li className="flex justify-between gap-4">
               <span>Daily rate</span>
               <span>{dailyRate ?? 0} kcal</span>
             </li>
-            <li className="flex justify-between">
+            <li className="flex justify-between gap-4">
               <span>% of normal</span>
               <span>
                 {dailyRate
@@ -119,10 +135,10 @@ const RightSideBar = ({ selectedDate }) => {
       </div>
 
       {/* Yasaklı yiyecekler */}
-      <div>
-        <h3 className="text-md font-bold mb-3">Food not recommended</h3>
+      <div className="flex flex-col items-center gap-4">
+        <h3 className="text-md font-bold">Food not recommended</h3>
         {notAllowedFoods?.length > 0 ? (
-          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] list-decimal list-inside">
+          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] list-decimal list-inside text-center space-y-2">
             {notAllowedFoods.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}

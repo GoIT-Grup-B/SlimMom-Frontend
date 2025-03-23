@@ -38,7 +38,7 @@ const DiaryPage = () => {
   }, [date, token, navigate]);
 
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-col md:flex-row justify-between">
       <div className="m-2.5 p-2.5">
         {/* Pass a callback to re-fetch or locally update products after adding */}
         <DiaryAddProductForm
