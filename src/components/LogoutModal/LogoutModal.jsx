@@ -1,3 +1,7 @@
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../redux/auth/authOps';
+import { useNavigate } from 'react-router-dom';
+
 const motivationalMessages = [
   'Her sağlıklı seçim, seni hedeflerine bir adım daha yaklaştırır!',
   'Bugün sağlıklı bir adım at, yarın kendine teşekkür edeceksin!',
@@ -29,7 +33,10 @@ const healthyImages = [
   '/src/assets/img/ModalImages/watermelon.jpg',
 ];
 
-const LogoutModal = ({ onClose, onConfirm }) => {
+const LogoutModal = ({ onClose }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const randomMessage =
     motivationalMessages[
       Math.floor(Math.random() * motivationalMessages.length)
@@ -37,9 +44,18 @@ const LogoutModal = ({ onClose, onConfirm }) => {
   const randomImage =
     healthyImages[Math.floor(Math.random() * healthyImages.length)];
 
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap();
+      navigate('/auth/login');
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-lg z-50">
-      {/* Modal İçeriği */}
       <div className="bg-white p-8 rounded-lg shadow-xl text-center w-[600px] relative">
         {/* Başlık */}
         <h2 className="text-2xl font-bold text-gray-800">
@@ -69,7 +85,7 @@ const LogoutModal = ({ onClose, onConfirm }) => {
             No
           </button>
           <button
-            onClick={onConfirm}
+            onClick={handleLogout}
             className="px-6 py-2 border-2 border-orange-400 text-orange-400 rounded-lg font-semibold text-lg shadow-md hover:bg-orange-400 hover:text-white transition"
           >
             Yes
