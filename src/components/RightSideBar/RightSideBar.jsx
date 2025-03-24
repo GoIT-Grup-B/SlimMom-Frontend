@@ -84,7 +84,7 @@ const RightSideBar = ({ selectedDate }) => {
         bg-gray-50
         rounded-lg
         shadow-md
-        bg-[url('yapraklar.png')]
+        bg-[url('/yapraklar.png')]
         bg-no-repeat
         bg-[position:70%_top]
         md:bg-[position:12px_35px]
