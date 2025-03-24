@@ -76,6 +76,7 @@ const RightSideBar = ({ selectedDate, date, products }) => {
         bg-[position:70%_top]
         md:bg-[position:12px_35px]
         md:bg-[length:auto_100%]
+        bg-[#F0F1F3]
       "
     >
       {/* Summary */}
