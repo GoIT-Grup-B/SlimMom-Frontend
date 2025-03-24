@@ -24,7 +24,7 @@ const RightSideBar = ({ selectedDate, date, products }) => {
       formattedDate = new Date(date).toISOString().split('T')[0];
     }
   } catch (err) {
-    console.log('Date format error:', err);
+    console.error('Date format error:', err);
   }
 
   // Günlük tüketilen kalori verisini API'den çek
@@ -44,7 +44,7 @@ const RightSideBar = ({ selectedDate, date, products }) => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
         setConsumedCalories(res.data.totalCalories || 0);
         setFetchedDate(res.data.date);
@@ -62,13 +62,11 @@ const RightSideBar = ({ selectedDate, date, products }) => {
         relative
         flex flex-col 
         items-start 
-        justify-center 
         gap-8
         w-full
         md:w-[600px]
         min-h-[400px] md:min-h-screen
         p-6 md:p-10
-        bg-gray-50
         rounded-lg
         shadow-md
         bg-[url('yapraklar.png')]

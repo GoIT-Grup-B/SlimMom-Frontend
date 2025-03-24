@@ -5,7 +5,6 @@ import axios from 'axios';
 import DiaryAddProductForm from '../../components/DiaryAddProductForm/DiaryAddProductForm';
 import { DiaryProductsList } from '../../components/DiaryProductsList/DiaryProductsList';
 import RightSideBar from '../../components/RightSideBar/RightSideBar'; // Düzelttik!
-import store from '../../redux/store';
 const DiaryPage = () => {
   const [date, setDate] = useState(new Date());
   const [products, setProducts] = useState([]);
@@ -28,8 +27,6 @@ const DiaryPage = () => {
       console.error('Failed to fetch products:', err);
     }
   };
-  console.log(token);
-  console.log('Stored Token:', store.getState().auth.token);
 
   useEffect(() => {
     if (!isPersistLoaded) return;

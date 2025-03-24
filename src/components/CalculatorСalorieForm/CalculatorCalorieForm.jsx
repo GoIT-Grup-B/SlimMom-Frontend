@@ -10,7 +10,7 @@ import { useState } from 'react';
 import DailyCaloryModal from '../DailyCaloryModal/DailyCaloryModal';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 
-function CalculatorCalorieForm({ setDailyRateData}) {
+function CalculatorCalorieForm({ setDailyRateData }) {
   const [dailyRate, setDailyRate] = useState(null);
 
   const handleSubmit = async (values) => {
@@ -19,7 +19,6 @@ function CalculatorCalorieForm({ setDailyRateData}) {
         'https://slimmom-backend-s8n8.onrender.com/user/daily-calory-needs',
         values,
       );
-      console.log(res.data.data);
       setDailyRate(res.data.data);
       setDailyRateData(res.data.data); // This line is added Murat
       localStorage.setItem('dailyRateData', JSON.stringify(res.data.data));

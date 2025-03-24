@@ -14,11 +14,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
-    console.log('Form gönderiliyor:', values); // Test için log ekledik
-
     try {
-      const result = await dispatch(loginUser(values)).unwrap();
-      console.log('Redux login sonucu:', result);
+      await dispatch(loginUser(values)).unwrap();
       toast.success('Login is successful.');
       resetForm();
     } catch (error) {

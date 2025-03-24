@@ -38,7 +38,6 @@ export const loginUser = createAsyncThunk(
         password,
       });
 
-      console.log(response);
       const token = response.data.data.accessToken;
 
       if (!token) throw new Error('No token received from API!');
