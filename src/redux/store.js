@@ -7,7 +7,7 @@ import loaderReducer from './Loader/loaderSlice';
 const authPersistConfig = {
   key: 'auth', // Bu alan sadece auth reducer için kullanılacak
   storage,
-  whitelist: ['token'], // Sadece token alanını persist etmek istiyoruz
+  whitelist: ['token','isLoggedIn'], // Sadece token alanını persist etmek istiyoruz
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);

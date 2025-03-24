@@ -85,9 +85,12 @@ const authSlice = createSlice({
         state.isRefreshing = false;
       })
       .addCase('persist/REHYDRATE', (state, action) => {
-        // Redux Persist yeniden yükleme işlemi için varsayılan davranış
-        return action.payload ? { ...state, ...action.payload.auth } : state;
-      });
+        if (action.payload && action.payload.auth) {
+          state.token = action.payload.auth.token || null;
+          state.isLoggedIn = !!action.payload.auth.token; 
+        }
+      })
+
   },
 });
 export const { setToken } = authSlice.actions;
