@@ -25,21 +25,26 @@ Slim Mom, kullanıcıların günlük kalori alımını takip edebileceği ve hed
 
 ## Özellikler
 
-- **Yetkilendirme Sistemi:** Güvenli kullanıcı giriş ve kayıt işlemleri.
-- **Kalori Hesaplama:** Günlük önerilen kalori miktarını belirleme.
-- **Besin Takibi:** Kullanıcıların tükettiği besinleri kaydetmesi.
-- **İstatistik Sayfası:** Günlük ve aylık bazda kalori takibi grafikleri.
-- **Duyarlı Tasarım:** Masaüstü, tablet ve mobil cihazlarla tam uyumluluk.
+- **Kullanıcı Kaydı & Girişi:** Kullanıcı dostu oturum yönetimi (JWT ile güvenli giriş/çıkış).
+- **Ana Sayfa:** Kullanıcıların günlük kalori alımlarını takip edebilecekleri genel bir özet ekranı.
+- **Günlük Kalori Takibi:** Kullanıcıların yedikleri besinleri ekleyerek günlük kalori dengesini görebilmeleri.
+- **Önerilen Besin Listesi:** Günlük kalori ihtiyacına göre önerilen besinleri gösterir.
+- **Duyarlı (Responsive) Tasarım:** Mobil, tablet ve masaüstü cihazlarda sorunsuz çalışır.
+- **Redux Toolkit ile Durum Yönetimi:** Kullanıcı verilerinin etkin şekilde yönetilmesi.
+- **Formik & Yup ile Form Doğrulama:** Kullanıcı girişlerinde ve form gönderimlerinde hata yönetimi.
+- **API Entegrasyonu:** Backend ile senkronize çalışarak verilerin güncellenmesi.
 
 ## Beceriler ve Araçlar
 
-- **React:** Dinamik kullanıcı arayüzleri geliştirme.
-- **Redux Toolkit:** Durum yönetimi ve öngörülebilir güncellemeler.
+- **React.js:** Dinamik kullanıcı arayüzleri geliştirme.
+- **Redux Toolkit:** Global durum yönetimi ve verimli veri akışı.
+- **React Router:** Sayfa yönlendirme ve dinamik rotalar.
 - **Redux-Persist:** Oturumlar arasında durumun korunması.
 - **JavaScript (ES6+):** Dinamik işlevler için gelişmiş JavaScript kullanımı.
-- **Axios:** API etkileşimi ve HTTP istekleri.
+- **Axios:** Backend API’si ile veri alışverişi.
 - **Formik + Yup:** Form yönetimi ve doğrulama.
-- **Tailwind CSS:** Bileşen bazlı yerel stil.
+- **Tailwind CSS:** Modern ve ölçeklenebilir stiller ile hızlı UI tasarımı.
+- **React Toastify:** Kullanıcı dostu bildirim sistemi.
 - **Vite:** Hızlı derleme ve canlı yeniden yükleme.
 - **Vercel:** Sorunsuz dağıtım ve barındırma.
 
