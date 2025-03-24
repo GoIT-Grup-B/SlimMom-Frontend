@@ -38,7 +38,8 @@ export const loginUser = createAsyncThunk(
         password,
       });
 
-      const token = response.data?.data?.accessToken;
+      console.log(response);
+      const token = response.data.data.accessToken;
 
       if (!token) throw new Error('No token received from API!');
 
@@ -50,7 +51,7 @@ export const loginUser = createAsyncThunk(
         user: response.data.data.user,
       };
     } catch (error) {
-      console.error('Axios hata yanıtı:', error.response?.data);
+      console.error('Axios hata yanıtı:', error);
       return rejectWithValue(error.response?.data || 'Login failed');
     }
   },
