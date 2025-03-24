@@ -8,6 +8,7 @@ import LogoutModal from '../LogoutModal/LogoutModal';
 const UserInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const username = useSelector((state) => state.auth.user?.name);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
 
@@ -37,13 +38,15 @@ const UserInfo = () => {
       <span className="mx-2 h-10 border-2 border-gray-300"></span>
 
       {/* Exit */}
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="font-bold text-[14px] leading-[1] tracking-[0.04em] text-[#9B9FAA] hover:text-gray-600 transition"
-        style={{ fontFamily: 'Verdana, sans-serif' }}
-      >
-        Exit
-      </button>
+      {isLoggedIn && (
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="font-bold text-[14px] leading-[1] tracking-[0.04em] text-[#9B9FAA] hover:text-gray-600 transition"
+          style={{ fontFamily: 'Verdana, sans-serif' }}
+        >
+          Exit
+        </button>
+      )}
 
       {/* Modal */}
       {isModalOpen && (
