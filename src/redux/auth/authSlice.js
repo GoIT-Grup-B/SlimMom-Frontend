@@ -40,8 +40,8 @@ const authSlice = createSlice({
         state.isRefreshing = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload.data.user; // 🔥 DÜZGÜN
-        state.token = action.payload.data.accessToken;
+        state.user = action.payload.user;
+        state.token = action.payload.accessToken;
         state.isLoggedIn = true;
         state.error = null;
       })
@@ -76,12 +76,11 @@ const authSlice = createSlice({
         state.error = action.payload || 'Logout failed';
       })
 
-      // Refresh Reducers
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload.data?.user || action.payload;
+        state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })

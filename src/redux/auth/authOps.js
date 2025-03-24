@@ -4,6 +4,7 @@ import { setToken } from './authSlice';
 
 const API_URL = 'https://slimmom-backend-s8n8.onrender.com';
 
+// REGISTER
 export const registerUser = createAsyncThunk(
   'auth/register',
   async ({ name, email, password }, { rejectWithValue }) => {
@@ -13,13 +14,21 @@ export const registerUser = createAsyncThunk(
         email,
         password,
       });
-      return response.data;
+
+      return {
+        accessToken: response.data.token,
+        user: {
+          name: response.data.data.name,
+          email: response.data.data.email,
+        },
+      };
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Registration failed');
     }
   },
 );
 
+// LOGIN
 export const loginUser = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { dispatch, rejectWithValue }) => {
@@ -29,16 +38,17 @@ export const loginUser = createAsyncThunk(
         password,
       });
 
-      const token = response.data?.data?.accessToken || response.data?.token;
+      const token = response.data?.data?.accessToken;
 
-      if (!token) {
-        throw new Error('No token received from API!');
-      }
+      if (!token) throw new Error('No token received from API!');
 
       dispatch(setToken(token));
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      return response.data;
+      return {
+        accessToken: token,
+        user: response.data.data.user,
+      };
     } catch (error) {
       console.error('Axios hata yanıtı:', error.response?.data);
       return rejectWithValue(error.response?.data || 'Login failed');
@@ -46,10 +56,11 @@ export const loginUser = createAsyncThunk(
   },
 );
 
+// REFRESH
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
   async (_, { getState, rejectWithValue }) => {
-    const { token } = getState().auth; // Token state'ten alınıyor
+    const { token } = getState().auth;
     if (!token) return rejectWithValue('No token available');
 
     try {
@@ -58,16 +69,21 @@ export const refreshUser = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data;
+
+      return {
+        name: response.data.name,
+        email: response.data.email,
+      };
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Refresh failed');
     }
   },
 );
 
+// LOGOUT
 export const logoutUser = createAsyncThunk(
   'auth/logout',
-  async (_, { getState, dispatch, rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     const token = getState().auth.token;
     if (!token) return rejectWithValue('No token found');
 
@@ -78,7 +94,6 @@ export const logoutUser = createAsyncThunk(
         },
       });
 
-      // 🧹 Auth header'ı temizle
       delete axios.defaults.headers.common['Authorization'];
 
       return response.data;
