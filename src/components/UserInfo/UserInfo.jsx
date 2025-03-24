@@ -10,6 +10,9 @@ const UserInfo = () => {
   const username = useSelector((state) => state.auth.user?.name);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+
+  console.log('Kullanıcı:', username);
+
   const handleLogout = () => {
     if (!token) {
       console.warn('User already logged out, skipping logout request.');

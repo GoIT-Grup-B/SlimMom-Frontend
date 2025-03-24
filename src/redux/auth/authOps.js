@@ -29,23 +29,27 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { dispatch, rejectWithValue }) => {
     try {
       dispatch(startLoading());
+
       const response = await axios.post(`${API_URL}/auth/login`, {
         email,
         password,
       });
 
-      const token = response.data?.data?.accessToken || response.data?.token;
+      const token = response.data?.data?.accessToken;
+      const user = response.data?.data?.user;
 
-      if (!token) {
-        throw new Error('No token received from API!');
+      if (!token || !user) {
+        throw new Error('Missing token or user from API!');
       }
 
-      dispatch(setToken(token));
+      // 🔥 TOKEN'U AXIOS'A GLOBAL EKLE
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      return response.data;
+      // REDUX SET
+      dispatch(setToken(token));
+
+      return response.data; // token ve user bilgisi
     } catch (error) {
-      console.error('Axios hata yanıtı:', error.response?.data);
       return rejectWithValue(error.response?.data || 'Login failed');
     } finally {
       dispatch(stopLoading());
@@ -56,7 +60,7 @@ export const loginUser = createAsyncThunk(
 export const refreshUser = createAsyncThunk(
   'auth/refresh',
   async (_, { getState, dispatch, rejectWithValue }) => {
-    const { token } = getState().auth; // Token state'ten alınıyor
+    const { token } = getState().auth;
     if (!token) return rejectWithValue('No token available');
 
     try {
@@ -66,7 +70,10 @@ export const refreshUser = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data;
+
+      console.log('🔥 Refresh USER Response:', response.data);
+
+      return response.data.data.user; // Bu response.data mı? Yoksa response.data.data mı?
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Refresh failed');
     } finally {

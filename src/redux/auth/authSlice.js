@@ -19,8 +19,11 @@ const authSlice = createSlice({
   reducers: {
     setToken(state, action) {
       state.token = action.payload;
-      state.isLoggedIn = !!action.payload; // Token varsa giriş yapıldı
+      state.isLoggedIn = !!action.payload;
+      axios.defaults.headers.common['Authorization'] =
+        `Bearer ${action.payload}`;
     },
+
     logoutSuccess: (state) => {
       state.isLoggedIn = false;
       state.token = null;
@@ -35,7 +38,7 @@ const authSlice = createSlice({
         state.isRefreshing = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        state.user = action.payload.data.user;
         state.token = action.payload.data.accessToken;
         state.isLoggedIn = true;
         state.error = null;
@@ -51,7 +54,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.token = action.payload.data.accessToken;
-        state.user = action.payload.user;
+        state.user = action.payload.data.user;
         state.isLoggedIn = true;
         state.error = null;
       })
@@ -76,7 +79,7 @@ const authSlice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload; // API'den user objesi direkt gelmeli
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
@@ -86,11 +89,16 @@ const authSlice = createSlice({
       })
       .addCase('persist/REHYDRATE', (state, action) => {
         if (action.payload && action.payload.auth) {
-          state.token = action.payload.auth.token || null;
-          state.isLoggedIn = !!action.payload.auth.token; 
+          const storedToken = action.payload.auth.token || null;
+          state.token = storedToken;
+          state.user = action.payload.auth.user || { name: null, email: null };
+          state.isLoggedIn = !!storedToken;
+          if (storedToken) {
+            axios.defaults.headers.common['Authorization'] =
+              `Bearer ${storedToken}`;
+          }
         }
-      })
-
+      });
   },
 });
 export const { setToken } = authSlice.actions;
