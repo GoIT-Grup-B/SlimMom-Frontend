@@ -17,7 +17,12 @@ const RightSideBar = ({ selectedDate, date, products }) => {
   const leftCalories = dailyRate - consumedCalories;
   // 2- Burada gönderdiğim date değerini doğru ve kullanılabilir bir formata çevirmesini sağladım - METE!!
   //2a- Gelen date değeri Mon Mar 24 2025 15:22:26 GMT+0300 (GMT+03:00) - METE!!
-  date = new Date(date).toISOString().split('T')[0];
+
+  try {
+    date = new Date(date).toISOString().split('T')[0];
+  } catch (err) {
+    console.log(err);
+  }
   // 2b- Çevrilmiş date değeri 2025-03-24 - METE!!
 
   // Günlük kalori ihtiyacı ve yasaklı yiyecekleri çek
