@@ -5,14 +5,14 @@ import axios from 'axios';
 import DiaryAddProductForm from '../../components/DiaryAddProductForm/DiaryAddProductForm';
 import { DiaryProductsList } from '../../components/DiaryProductsList/DiaryProductsList';
 import RightSideBar from '../../components/RightSideBar/RightSideBar'; // Düzelttik!
-
+import store from '../../redux/store';
 const DiaryPage = () => {
   const [date, setDate] = useState(new Date());
   const [products, setProducts] = useState([]);
-  const token = useSelector((state) => state.auth.token);
+  const { token } = useSelector((state) => state.auth);
+  const isPersistLoaded = useSelector((state) => state.auth.token !== null);
   const navigate = useNavigate();
 
-  // Fetch products
   const fetchProducts = async (selectedDate) => {
     try {
       const response = await axios.get(
@@ -28,14 +28,19 @@ const DiaryPage = () => {
       console.error('Failed to fetch products:', err);
     }
   };
+  console.log(token);
+  console.log('Stored Token:', store.getState().auth.token);
 
   useEffect(() => {
+    if (!isPersistLoaded) return;
+
     if (!token) {
       navigate('/login', { replace: true });
       return;
     }
     fetchProducts(date);
-  }, [date, token, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date, token, navigate, isPersistLoaded]);
 
   return (
     <div className="flex flex-col md:flex-row justify-between">
@@ -53,7 +58,7 @@ const DiaryPage = () => {
         />
       </div>
       <div>
-        <RightSideBar />
+        <RightSideBar date={date} products={products} />
       </div>
     </div>
   );

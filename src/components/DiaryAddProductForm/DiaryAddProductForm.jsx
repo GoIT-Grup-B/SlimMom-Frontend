@@ -4,6 +4,7 @@ import calendar from '/svg/calendar.svg';
 import axios from 'axios';
 import { DiaryDateСalendar } from '../DiaryDateСalendar/DiaryDateСalendar';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 const DiaryAddProductForm = ({ date, setDate, onAddSuccess }) => {
   const [query, setQuery] = useState('');
@@ -11,12 +12,16 @@ const DiaryAddProductForm = ({ date, setDate, onAddSuccess }) => {
   const [weight, setWeight] = useState('');
   const [itemId, setItemId] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('');
+  const { token } = useSelector((state) => state.auth);
 
   function deleteList() {
     setFilteredItems([]);
   }
 
   async function addProduct() {
+    if (!token) {
+      toast.error('You must be logged in to add a product!');
+    }
     if (itemId && weight) {
       try {
         await axios.post(
@@ -26,6 +31,7 @@ const DiaryAddProductForm = ({ date, setDate, onAddSuccess }) => {
             productWeight: weight,
             date,
           },
+          { headers: { Authorization: `Bearer ${token}` } },
         );
         // Trigger re-fetch in DiaryPage, so the new item appears right away
         onAddSuccess && onAddSuccess();

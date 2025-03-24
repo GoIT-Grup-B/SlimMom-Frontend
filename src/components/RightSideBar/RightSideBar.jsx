@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
+// 5- Burada reduxu import ettim - METE!!
+import { useSelector } from 'react-redux';
 
-const RightSideBar = ({ selectedDate }) => {
+// 1- Buraya benim gönderdiğim date değişkenini prop olarak getirmesini sağladım - METE!!
+const RightSideBar = ({ selectedDate, date, products }) => {
   const [dailyRate, setDailyRate] = useState(0);
   const [notAllowedFoods, setNotAllowedFoods] = useState([]);
   const [consumedCalories, setConsumedCalories] = useState(0);
   const [status, setStatus] = useState('idle');
   const [fetchedDate, setFetchedDate] = useState('');
+  // 6- Burada tokeni çağırdım ve artık bu değişken token olarak kullanılmaya hazır - METE!!
+  const { token } = useSelector((state) => state.auth);
 
   const leftCalories = dailyRate - consumedCalories;
+  // 2- Burada gönderdiğim date değerini doğru ve kullanılabilir bir formata çevirmesini sağladım - METE!!
+  //2a- Gelen date değeri Mon Mar 24 2025 15:22:26 GMT+0300 (GMT+03:00) - METE!!
+  date = new Date(date).toISOString().split('T')[0];
+  // 2b- Çevrilmiş date değeri 2025-03-24 - METE!!
 
   // Günlük kalori ihtiyacı ve yasaklı yiyecekleri çek
   useEffect(() => {
@@ -17,22 +26,27 @@ const RightSideBar = ({ selectedDate }) => {
       setStatus('loading');
       try {
         const tokenData = localStorage.getItem('persist:auth');
-        const token = tokenData ? JSON.parse(JSON.parse(tokenData).token) : null;
+        const token = tokenData
+          ? JSON.parse(JSON.parse(tokenData).token)
+          : null;
 
         const res = await axios.get(
-          'https://slimmom-backend-s8n8.onrender.com/user/my-daily-calory-needs',
+          `https://slimmom-backend-s8n8.onrender.com/user/my-daily-calory-needs?`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
 
         setDailyRate(res.data.data.dailyRate || 0);
         setNotAllowedFoods(res.data.data.notAllowedFoods || []);
         setStatus('succeeded');
       } catch (err) {
-        console.log('Daily Info Error:', err.response?.data?.message || 'Error');
+        console.log(
+          'Daily Info Error:',
+          err.response?.data?.message || 'Error',
+        );
         setStatus('failed');
       }
     };
@@ -44,30 +58,29 @@ const RightSideBar = ({ selectedDate }) => {
   useEffect(() => {
     const fetchDailyCalories = async () => {
       try {
-        const tokenData = localStorage.getItem('persist:auth');
-        const token = tokenData ? JSON.parse(JSON.parse(tokenData).token) : null;
-
-        const formattedDate = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '';
-
         const res = await axios.get(
-          `https://slimmom-backend-s8n8.onrender.com/user/my-daily-calories?date=${formattedDate}`,
+          //3- Burada benim gönderdiğim date değerini doğru bir şekilde almasını sağladım - METE!!
+          `https://slimmom-backend-s8n8.onrender.com/user/my-daily-calories?date=${date}`,
           {
             headers: {
+              // 4- Burada verilen token değerinin doğru alınmasını sağlamak için redux kullandum. Bu commentin devamı sayfanın en yukarısında - METE!!
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
+        //7- Buradaki console.log yardımıyla gelen cevaptan hangi verilerin alınması gerektiğini gördüm - METE!!
+        console.log('RES:', res.data);
+        //   8- Burada dönen cevaptan almak istediğim verileri seçtim - METE!!
         setConsumedCalories(res.data.totalCalories || 0);
         setFetchedDate(res.data.date);
       } catch (err) {
-        console.log('Daily Calories Error:', err.response?.data?.message || 'Error');
+        console.log('Daily Calories Error:', err);
       }
     };
-
-    if (selectedDate) {
-      fetchDailyCalories();
-    }
-  }, [selectedDate]);
+    // 9- Hiçbir koşula bağlı kalmadan her useEffect kullanımında bu fonksiyonun çalışması gerektiğini belirttim - METE!!
+    fetchDailyCalories();
+    //   10- Aşağıdaki verilenden herhangi biri değiştiğinde fonksiyonun tekrar çalışmasını sağladım böylelikle consumed calories her zaman güncel kalacak - METE!!
+  }, [selectedDate, date, token, products]);
 
   return (
     <aside
@@ -94,7 +107,9 @@ const RightSideBar = ({ selectedDate }) => {
       {/* Summary */}
       <div className="flex flex-col items-start gap-4 mb-12 w-full">
         <h3 className="font-verdana font-bold text-sm tracking-wider">
-          Summary for {fetchedDate || (selectedDate ? format(selectedDate, 'dd.MM.yyyy') : '')}
+          Summary for{' '}
+          {fetchedDate ||
+            (selectedDate ? format(selectedDate, 'dd.MM.yyyy') : '')}
         </h3>
         {status === 'loading' ? (
           <p>Loading...</p>

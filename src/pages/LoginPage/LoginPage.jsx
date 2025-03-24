@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-
+import store from '../../redux/store';
 const Login = () => {
   const { isLoggedIn, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const Login = () => {
       navigate('/', { replace: true });
     }
   }, [isLoggedIn, navigate]);
+ console.log("Stored Token:", store.getState().auth.token);
 
   useEffect(() => {
     if (error) {
