@@ -25,8 +25,10 @@ const authSlice = createSlice({
     },
 
     logoutSuccess: (state) => {
+      delete axios.defaults.headers.common['Authorization'];
       state.isLoggedIn = false;
       state.token = null;
+      state.user = { name: null, email: null };
     },
   },
   extraReducers: (builder) => {
@@ -38,7 +40,7 @@ const authSlice = createSlice({
         state.isRefreshing = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload.data.user;
+        state.user = action.payload.data.user; // 🔥 DÜZGÜN
         state.token = action.payload.data.accessToken;
         state.isLoggedIn = true;
         state.error = null;
@@ -79,7 +81,7 @@ const authSlice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload; // API'den user objesi direkt gelmeli
+        state.user = action.payload.data?.user || action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
