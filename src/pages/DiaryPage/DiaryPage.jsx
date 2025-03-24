@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DiaryAddProductForm from '../../components/DiaryAddProductForm/DiaryAddProductForm';
 import { DiaryProductsList } from '../../components/DiaryProductsList/DiaryProductsList';
-import RideSideBar from '../../components/RightSideBar/RightSideBar';
+import RightSideBar from '../../components/RightSideBar/RightSideBar'; // Düzelttik!
 
 const DiaryPage = () => {
   const [date, setDate] = useState(new Date());
@@ -12,7 +12,7 @@ const DiaryPage = () => {
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
-  // Fetch products once (instead of inside DiaryProductsList)
+  // Fetch products
   const fetchProducts = async (selectedDate) => {
     try {
       const response = await axios.get(
@@ -29,7 +29,6 @@ const DiaryPage = () => {
     }
   };
 
-  // Re-fetch if date or token changes
   useEffect(() => {
     if (!token) {
       navigate('/login', { replace: true });
@@ -39,7 +38,7 @@ const DiaryPage = () => {
   }, [date, token, navigate]);
 
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-col md:flex-row justify-between">
       <div className="m-2.5 p-2.5">
         {/* Pass a callback to re-fetch or locally update products after adding */}
         <DiaryAddProductForm
@@ -54,7 +53,7 @@ const DiaryPage = () => {
         />
       </div>
       <div>
-        <RideSideBar />
+        <RightSideBar />
       </div>
     </div>
   );

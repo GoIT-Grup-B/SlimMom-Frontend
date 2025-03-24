@@ -10,7 +10,7 @@ import { useState } from 'react';
 import DailyCaloryModal from '../DailyCaloryModal/DailyCaloryModal';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 
-function CalculatorCalorieForm() {
+function CalculatorCalorieForm({ setDailyRateData}) {
   const [dailyRate, setDailyRate] = useState(null);
 
   const handleSubmit = async (values) => {
@@ -21,6 +21,7 @@ function CalculatorCalorieForm() {
       );
       console.log(res.data.data);
       setDailyRate(res.data.data);
+      setDailyRateData(res.data.data); // This line is added Murat
     } catch (e) {
       console.error(e);
       toast.error(e.response.data.message);

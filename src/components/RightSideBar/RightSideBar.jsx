@@ -16,9 +16,8 @@ const RightSideBar = ({ selectedDate }) => {
     const fetchDailyInfo = async () => {
       setStatus('loading');
       try {
-        const token = localStorage.getItem('persist:auth')
-          ? JSON.parse(localStorage.getItem('persist:auth').token)
-          : null;
+        const tokenData = localStorage.getItem('persist:auth');
+        const token = tokenData ? JSON.parse(JSON.parse(tokenData).token) : null;
 
         const res = await axios.get(
           'https://slimmom-backend-s8n8.onrender.com/user/my-daily-calory-needs',
@@ -26,19 +25,15 @@ const RightSideBar = ({ selectedDate }) => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          },
+          }
         );
-        setDailyRate(res.data.data.dailyRate);
-        setNotAllowedFoods(res.data.data.notAllowedFoods);
+
+        setDailyRate(res.data.data.dailyRate || 0);
+        setNotAllowedFoods(res.data.data.notAllowedFoods || []);
         setStatus('succeeded');
       } catch (err) {
-        console.log(
-          'Daily Info Error:',
-          err.response?.data?.message || 'Error',
-        );
-        console.log(err);
+        console.log('Daily Info Error:', err.response?.data?.message || 'Error');
         setStatus('failed');
-        // Ekranda hata göstermiyoruz, konsola yazıyoruz sadece
       }
     };
 
@@ -49,13 +44,10 @@ const RightSideBar = ({ selectedDate }) => {
   useEffect(() => {
     const fetchDailyCalories = async () => {
       try {
-        const token = localStorage.getItem('persist:auth')
-          ? JSON.parse(JSON.parse(localStorage.getItem('persist:auth')).token)
-          : null;
+        const tokenData = localStorage.getItem('persist:auth');
+        const token = tokenData ? JSON.parse(JSON.parse(tokenData).token) : null;
 
-        const formattedDate = selectedDate
-          ? format(selectedDate, 'yyyy-MM-dd')
-          : '';
+        const formattedDate = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '';
 
         const res = await axios.get(
           `https://slimmom-backend-s8n8.onrender.com/user/my-daily-calories?date=${formattedDate}`,
@@ -63,16 +55,12 @@ const RightSideBar = ({ selectedDate }) => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          },
+          }
         );
-        setConsumedCalories(res.data.dailyCalories);
-        setFetchedDate(res.data.date); // API'den dönen tarih
+        setConsumedCalories(res.data.totalCalories || 0);
+        setFetchedDate(res.data.date);
       } catch (err) {
-        console.log(
-          'Daily Calories Error:',
-          err.response?.data?.message || 'Error',
-        );
-        // hata olsa bile 0 kalori yazdırıyoruz
+        console.log('Daily Calories Error:', err.response?.data?.message || 'Error');
       }
     };
 
@@ -82,31 +70,49 @@ const RightSideBar = ({ selectedDate }) => {
   }, [selectedDate]);
 
   return (
-    <aside className="flex flex-col gap-8 w-full md:w-[300px] p-4 bg-gray-50 rounded-lg shadow-md">
+    <aside
+      className="
+        relative
+        flex flex-col 
+        items-start 
+        justify-center 
+        gap-8
+        w-full
+        md:w-[600px]
+        min-h-[400px] md:min-h-screen
+        p-6 md:p-10
+        bg-gray-50
+        rounded-lg
+        shadow-md
+        bg-[url('yapraklar.png')]
+        bg-no-repeat
+        bg-[position:70%_top]
+        md:bg-[position:12px_35px]
+        md:bg-[length:auto_100%]
+      "
+    >
       {/* Summary */}
-      <div>
-        <h3 className="font-verdana font-bold text-sm mb-4 tracking-wider">
-          Summary for{' '}
-          {fetchedDate ||
-            (selectedDate ? format(selectedDate, 'dd.MM.yyyy') : '')}
+      <div className="flex flex-col items-start gap-4 mb-12 w-full">
+        <h3 className="font-verdana font-bold text-sm tracking-wider">
+          Summary for {fetchedDate || (selectedDate ? format(selectedDate, 'dd.MM.yyyy') : '')}
         </h3>
         {status === 'loading' ? (
           <p>Loading...</p>
         ) : (
-          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] leading-[14px] tracking-[0.04em] space-y-2">
-            <li className="flex justify-between">
+          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] leading-[18px] tracking-[0.04em] space-y-4 w-full">
+            <li className="flex justify-between gap-4">
               <span>Left</span>
               <span>{leftCalories >= 0 ? leftCalories : 0} kcal</span>
             </li>
-            <li className="flex justify-between">
+            <li className="flex justify-between gap-4">
               <span>Consumed</span>
               <span>{consumedCalories ?? 0} kcal</span>
             </li>
-            <li className="flex justify-between">
+            <li className="flex justify-between gap-4">
               <span>Daily rate</span>
               <span>{dailyRate ?? 0} kcal</span>
             </li>
-            <li className="flex justify-between">
+            <li className="flex justify-between gap-4">
               <span>% of normal</span>
               <span>
                 {dailyRate
@@ -119,10 +125,10 @@ const RightSideBar = ({ selectedDate }) => {
       </div>
 
       {/* Yasaklı yiyecekler */}
-      <div>
-        <h3 className="text-md font-bold mb-3">Food not recommended</h3>
+      <div className="flex flex-col items-start gap-4 w-full">
+        <h3 className="text-md font-bold">Food not recommended</h3>
         {notAllowedFoods?.length > 0 ? (
-          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] list-decimal list-inside">
+          <ul className="text-[#9B9FAA] font-[Verdana] text-[14px] list-decimal list-inside space-y-2">
             {notAllowedFoods.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}
