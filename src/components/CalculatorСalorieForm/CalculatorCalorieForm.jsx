@@ -22,7 +22,6 @@ function CalculatorCalorieForm({ setDailyRateData}) {
       console.log(res.data.data);
       setDailyRate(res.data.data);
       setDailyRateData(res.data.data); // This line is added Murat
-      localStorage.setItem('dailyRateData', JSON.stringify(res.data.data));
     } catch (e) {
       console.error(e);
       toast.error(e.response.data.message);
