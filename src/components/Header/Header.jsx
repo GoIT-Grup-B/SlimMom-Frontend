@@ -14,7 +14,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full border-b border-gray-200 px-4 py-12 md:px-6 relative z-50 bg-white">
+    <header className="w-full border-b border-gray-200 px-4 py-12 md:px-6 relative z-50 bg-transparent">
       {/* ÜST SATIR */}
       <div className="flex justify-between items-center">
         {/* Sol: Logo + Menü */}
