@@ -21,16 +21,16 @@ const motivationalMessages = [
 ];
 
 const healthyImages = [
-  '/src/assets/img/ModalImages/apple.jpg',
-  '/src/assets/img/ModalImages/avocado.jpg',
-  '/src/assets/img/ModalImages/banana.jpg',
-  '/src/assets/img/ModalImages/blueberries.jpg',
-  '/src/assets/img/ModalImages/broccoli.jpg',
-  '/src/assets/img/ModalImages/carrot.jpg',
-  '/src/assets/img/ModalImages/orange.jpg',
-  '/src/assets/img/ModalImages/spinach.jpg',
-  '/src/assets/img/ModalImages/strawberry.jpg',
-  '/src/assets/img/ModalImages/watermelon.jpg',
+  '/img/ModalImages/apple.jpg',
+  '/img/ModalImages/avocado.jpg',
+  '/img/ModalImages/banana.jpg',
+  '/img/ModalImages/blueberries.jpg',
+  '/img/ModalImages/broccoli.jpg',
+  '/img/ModalImages/carrot.jpg',
+  '/img/ModalImages/orange.jpg',
+  '/img/ModalImages/spinach.jpg',
+  '/img/ModalImages/strawberry.jpg',
+  '/img/ModalImages/watermelon.jpg',
 ];
 
 const LogoutModal = ({ onClose }) => {
