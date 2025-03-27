@@ -6,17 +6,19 @@ import { useEffect } from 'react';
 
 
 const RegistrationPage = () => {
-  const { isLoggedIn, error } = useSelector((store) => store.auth);
+  const { token, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-
+console.log( useSelector((state) => state.auth))
   useEffect(() => {
-    if (isLoggedIn) {
+    if (token) {
       navigate('/', { replace: true });
     }
-  }, [isLoggedIn, navigate]);
+  }, [token, navigate]);
 
   useEffect(() => {
-    if (error) toast.error(error);
+    if (error)
+    toast.error(error.message || 'An error occurred!');
+
   }, [error]);
 
   return (

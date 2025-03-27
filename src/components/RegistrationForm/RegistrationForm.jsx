@@ -28,18 +28,13 @@ const RegistrationForm = () => {
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     try {
       const { name, email, password } = values;
-      const response = await dispatch(
+      await dispatch(
         registerUser({ name, email, password }),
       ).unwrap();
-      if (response.meta.requestStatus === 'fulfilled') {
-        // 🔥 Kullanıcı başarılı giriş yaptı mı kontrolü
         toast.success('Registration is successful.');
         resetForm();
-        navigate('/diary'); // 🔥 Başarılı kayıt sonrası yönlendirme
-        resetForm();
-      }
     } catch (error) {
-      if (error.code === 11000) {
+      if (error.code === 11000 || error.message?.includes('already exists')) {
         toast.error('User already exists. Please try a different email.');
       } else {
         toast.error('Registration failed, please try again.');
@@ -51,6 +46,7 @@ const RegistrationForm = () => {
   };
 
   return (
+    <>
     <Formik
       initialValues={{ name: '', email: '', password: '' }}
       validationSchema={registerSchema}
@@ -118,7 +114,7 @@ const RegistrationForm = () => {
             <button
               type="button"
               className="bg-white cursor-pointer text-[#FC842D] px-6 py-2 w-30 h-10 rounded-full hover:bg-orange-600 border-orange-500 border-2"
-              onClick={() => navigate('/auth/login')}
+              onClick={() => navigate('/login')}
             >
               Login
             </button>
@@ -126,6 +122,7 @@ const RegistrationForm = () => {
         </Form>
       )}
     </Formik>
+     </>
   );
 };
 
