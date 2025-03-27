@@ -6,14 +6,14 @@ import { useEffect } from 'react';
 
 
 const RegistrationPage = () => {
-  const { token, error } = useSelector((state) => state.auth);
+  const { isLoggedIn, error } = useSelector((state) => state.auth);
+
   const navigate = useNavigate();
-console.log( useSelector((state) => state.auth))
   useEffect(() => {
-    if (token) {
-      navigate('/', { replace: true });
+    if (isLoggedIn) {
+      navigate('/register', { replace: true });
     }
-  }, [token, navigate]);
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     if (error)
