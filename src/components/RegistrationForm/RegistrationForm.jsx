@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { registerUser } from '../../redux/auth/authOps';
 
-const Register = () => {
+const RegistrationForm = () => {
   const nameFieldId = useId();
   const emailFieldId = useId();
   const passwordFieldId = useId();
@@ -25,7 +25,7 @@ const Register = () => {
       .min(6, 'Password must be at least 6 characters'),
   });
 
-  const handleSubmit = async (values, { resetForm }) => {
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     try {
       const { name, email, password } = values;
       const response = await dispatch(
@@ -45,6 +45,8 @@ const Register = () => {
         toast.error('Registration failed, please try again.');
       }
       resetForm();
+    }finally{
+      setSubmitting(false);
     }
   };
 
@@ -54,7 +56,7 @@ const Register = () => {
       validationSchema={registerSchema}
       onSubmit={handleSubmit}
     >
-      {({ handleChange }) => (
+      {({ isSubmitting }) => (
         <Form className="flex flex-col items-start space-y-6 sm:gap-5 w-full justify-center p-2 md:p-8">
           <h1 id="registerHeader" className="text-orange-500 font-bold">
             REGISTER
@@ -66,7 +68,6 @@ const Register = () => {
               type="text"
               placeholder="Name *"
               className="flex-1 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
-              onChange={handleChange}
               autoFocus
             />
             <ErrorMessage
@@ -83,7 +84,6 @@ const Register = () => {
               type="email"
               placeholder="Email *"
               className="flex-1 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
-              onChange={handleChange}
             />
             <ErrorMessage
               name="email"
@@ -99,7 +99,6 @@ const Register = () => {
               type="password"
               placeholder="Password *"
               className="flex-1 p-2 border-b border-gray-300 focus:outline-none focus:ring-0"
-              onChange={handleChange}
             />
             <ErrorMessage
               name="password"
@@ -111,9 +110,10 @@ const Register = () => {
           <div className="flex flex-col sm:flex-row gap-5">
             <button
               type="submit"
+              disabled={isSubmitting}
               className="bg-[#FC842D] cursor-pointer text-white px-6 py-2 w-30 h-10 rounded-full hover:bg-orange-600"
             >
-              Register
+              {isSubmitting ? "Registering..." : "Register"}
             </button>
             <button
               type="button"
@@ -129,4 +129,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegistrationForm;
