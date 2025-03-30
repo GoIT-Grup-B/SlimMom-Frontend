@@ -30,13 +30,6 @@ const RightSideBar = ({ selectedDate, date, products }) => {
   // Günlük tüketilen kalori verisini API'den çek
   useEffect(() => {
     const fetchDailyCalories = async () => {
-      // Token veya tarih yoksa istek atma
-      if (!token || !formattedDate) {
-        setConsumedCalories(0);
-        setFetchedDate('');
-        return;
-      }
-
       try {
         const res = await axios.get(
           `https://slimmom-backend-s8n8.onrender.com/user/my-daily-calories?date=${formattedDate}`,
@@ -44,16 +37,27 @@ const RightSideBar = ({ selectedDate, date, products }) => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          },
+          }
         );
         setConsumedCalories(res.data.totalCalories || 0);
         setFetchedDate(res.data.date);
       } catch (err) {
-        console.log('Daily Calories Error:', err);
+        if (err.response && err.response.status === 404) {
+          setConsumedCalories(0);
+          setFetchedDate(formattedDate);
+        } else {
+          console.log('Daily Calories Error:', err);
+        }
       }
     };
 
-    fetchDailyCalories();
+    // 3'lü kontrol: token + formattedDate + ürün varsa
+    if (token && formattedDate && products && products.length > 0) {
+      fetchDailyCalories();
+    } else {
+      setConsumedCalories(0);
+      setFetchedDate('');
+    }
   }, [selectedDate, formattedDate, token, products]);
 
   return (
