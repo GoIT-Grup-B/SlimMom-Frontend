@@ -69,7 +69,7 @@ const RightSideBar = ({ selectedDate, date, products }) => {
         p-6 md:p-10
         rounded-lg
         shadow-md
-        bg-[url('yapraklar.png')]
+        bg-[url('/yapraklar.png')]
         bg-no-repeat
         bg-[position:70%_top]
         md:bg-[position:12px_35px]
