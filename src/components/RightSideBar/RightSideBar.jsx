@@ -49,7 +49,7 @@ const RightSideBar = ({ selectedDate, date, products }) => {
         setConsumedCalories(res.data.totalCalories || 0);
         setFetchedDate(res.data.date);
       } catch (err) {
-        console.log('Daily Calories Error:', err);
+        setConsumedCalories(0);
       }
     };
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DiaryAddProductForm from '../../components/DiaryAddProductForm/DiaryAddProductForm';
 import { DiaryProductsList } from '../../components/DiaryProductsList/DiaryProductsList';
-import RightSideBar from '../../components/RightSideBar/RightSideBar'; // Düzelttik!
+import RightSideBar from '../../components/RightSideBar/RightSideBar';
 const DiaryPage = () => {
   const [date, setDate] = useState(new Date());
   const [products, setProducts] = useState([]);
@@ -24,7 +24,7 @@ const DiaryPage = () => {
         setProducts(response.data.products);
       }
     } catch (err) {
-      console.error('Failed to fetch products:', err);
+      setProducts([]);
     }
   };
 
