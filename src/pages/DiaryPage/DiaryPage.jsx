@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DiaryAddProductForm from '../../components/DiaryAddProductForm/DiaryAddProductForm';
 import { DiaryProductsList } from '../../components/DiaryProductsList/DiaryProductsList';
-import RightSideBar from '../../components/RightSideBar/RightSideBar'; // Düzelttik!
+import RightSideBar from '../../components/RightSideBar/RightSideBar';
+
 const DiaryPage = () => {
   const [date, setDate] = useState(new Date());
   const [products, setProducts] = useState([]);
@@ -20,11 +21,10 @@ const DiaryPage = () => {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      if (response.status === 200) {
-        setProducts(response.data.products);
-      }
+      setProducts(response.data.products);
+      // eslint-disable-next-line no-unused-vars
     } catch (err) {
-      console.error('Failed to fetch products:', err);
+      setProducts([]);
     }
   };
 
