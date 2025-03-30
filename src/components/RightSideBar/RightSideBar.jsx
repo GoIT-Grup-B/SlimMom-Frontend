@@ -48,6 +48,7 @@ const RightSideBar = ({ selectedDate, date, products }) => {
         );
         setConsumedCalories(res.data.totalCalories || 0);
         setFetchedDate(res.data.date);
+      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setConsumedCalories(0);
       }
