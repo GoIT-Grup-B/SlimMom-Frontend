@@ -4,18 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
 
-const RegistrationPage = () => {
-  const { isLoggedIn, error } = useSelector((store) => store.auth);
-  const navigate = useNavigate();
 
+const RegistrationPage = () => {
+  const { isLoggedIn, error } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/', { replace: true });
+      navigate('/register', { replace: true });
     }
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
-    if (error) toast.error(error);
+    if (error)
+    toast.error(error.message || 'An error occurred!');
+
   }, [error]);
 
   return (
