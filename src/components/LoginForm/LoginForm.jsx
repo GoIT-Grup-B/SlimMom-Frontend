@@ -6,6 +6,7 @@ import { loginUser } from '../../redux/auth/authOps';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const Login = () => {
   const emailFieldId = useId();
@@ -39,7 +40,7 @@ const Login = () => {
       validationSchema={loginSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting,values }) => (
         <div className="">
           <Form className="flex flex-col items-start space-y-6 sm:gap-5 w-full justify-center p-2 md:p-8">
             <h1 id="loginHeader" className="text-orange-500 font-bold mb-10">
@@ -76,7 +77,7 @@ const Login = () => {
                 className="text-red-500 text-sm mt-1"
               />
             </div>
-
+            <PasswordStrengthBar password={values.password} />
             {/* Butonlar */}
             <div className="flex flex-col sm:flex-row gap-5">
               <button
