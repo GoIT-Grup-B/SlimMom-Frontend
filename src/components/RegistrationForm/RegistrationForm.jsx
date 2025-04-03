@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { registerUser } from '../../redux/auth/authOps';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const RegistrationForm = () => {
   const nameFieldId = useId();
@@ -52,7 +53,7 @@ const RegistrationForm = () => {
       validationSchema={registerSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting,values }) => (
         <Form className="flex flex-col items-start space-y-6 sm:gap-5 w-full justify-center p-2 md:p-8">
           <h1 id="registerHeader" className="text-orange-500 font-bold">
             REGISTER
@@ -102,7 +103,7 @@ const RegistrationForm = () => {
               className="text-red-500 text-sm mt-1"
             />
           </div>
-
+          <PasswordStrengthBar password={values.password} />
           <div className="flex flex-col sm:flex-row gap-5">
             <button
               type="submit"
